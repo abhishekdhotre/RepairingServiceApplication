@@ -1,7 +1,10 @@
 package edu.uta.utarepairingservices;
 
+import android.app.Activity;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,20 +15,39 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import edu.uta.utarepairingservices.DBAccess.AdminOperations;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 
-public class AddUserActivity extends AppCompatActivity {
+// kedarnad_android
+// qctFd6ye
+
+public class AddUserActivity extends Activity {
 
     Spinner roleSpinner;
     EditText firstNameET, lastNameET;
     String first_name, last_name;
     Button REG;
-    Context ctx = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if(networkInfo!=null && networkInfo.isConnected()) {
+            Toast.makeText(this, "Connected!", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(this, "No connection!", Toast.LENGTH_SHORT).show();
+        }
+
         roleSpinner = (Spinner)findViewById(R.id.roleSpinner);
         String[] items = new String[]{"Customer", "Service Provider"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, items);
@@ -45,9 +67,8 @@ public class AddUserActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Please enter Last Name!", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    AdminOperations db = new AdminOperations(ctx);
-                    db.putInformation(db, first_name, last_name);
-                    Toast.makeText(getBaseContext(), "Registration is successful!", Toast.LENGTH_SHORT).show();
+                    BackgroundTask backgroundTask = new BackgroundTask();
+                    backgroundTask.execute(first_name, last_name);
                     finish();
                 }
             }
@@ -66,4 +87,57 @@ public class AddUserActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    class BackgroundTask extends AsyncTask<String, Void, String> {
+
+        String add_info_url;
+
+        @Override
+        protected void onPreExecute() {
+            add_info_url = "http://kedarnadkarny.com/register_user.php";
+        }
+
+        @Override
+        protected String doInBackground(String... args) {
+            String fname, lname;
+            fname = args[0];
+            lname = args[1];
+            try {
+                URL url = new URL(add_info_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter((new OutputStreamWriter(outputStream,"UTF-8")));
+                String data_string = URLEncoder.encode("firstname","UTF-8")+"="+URLEncoder.encode(fname,"UTF-8")+"&"+
+                        URLEncoder.encode("lastname","UTF-8")+"="+URLEncoder.encode(lname,"UTF-8");
+                bufferedWriter.write(data_string);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return "One Row Inserted";
+            }
+            catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(AddUserActivity.this, s, Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
