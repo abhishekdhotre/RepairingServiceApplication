@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">UTA Repairing Services</string>
+    <string name="firstname">FIRST NAME</string>
+    <string name="lastname">LAST NAME</string>
+    <string name="radio_female">FEMALE</string>
+    <string name="radio_male">MALE</string>
+    <string name="gender">GENDER</string>
+    <string name="houseno">HOUSE NO</string>
+    <string name="street">STREET</string>
+    <string name="postalcode">POSTAL CODE</string>
+    <string name="city">CITY</string>
+    <string name="contact">CONTACT</string>
+    <string name="email">EMAIL</string>
+    <string name="isActive">ACTIVE</string>
+    <string name="role">ROLE</string>
+    <string name="addUser">ADD USER</string>
 </resources>
