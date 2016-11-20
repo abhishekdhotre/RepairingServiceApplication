@@ -25,9 +25,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-// kedarnad_android
-// qctFd6ye
-
 public class AddUserActivity extends Activity {
 
     Spinner roleSpinner;
