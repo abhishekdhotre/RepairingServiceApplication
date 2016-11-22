@@ -5,16 +5,24 @@ package edu.uta.utarepairingservices;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -26,97 +34,76 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ViewAppointmentStatusActivity extends Activity {
+
+    ListView lv;
+    ArrayAdapter<String> adapter;
+    String address="http://kedarnadkarny.com/utarepair/appointment_status_spv.php";
+    InputStream is=null;
+    String line=null;
+    String result=null;
+    String[]data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_appointment_status);
+        lv = (ListView) findViewById(R.id.listView);
 
-        String[] foods={"Bacon","Tuna","Candy"};
-        ListAdapter buckyAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,foods);
-        ListView buckyListView =(ListView) findViewById(R.id.buckysListView);
-        buckyListView.setAdapter(buckyAdapter);
-        buckyListView.setOnItemClickListener(
-                new AdapterView.OnItemClickListener(){
+        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
+        getData();
 
-                  public void onItemClick(AdapterView<?>parent, View view, int position, long id) {
-                      String food = String.valueOf(parent.getItemAtPosition(position));
-                      Toast.makeText(ViewAppointmentStatusActivity.this,food,Toast.LENGTH_LONG).show();
-                  }
-
-                  }
-
-        );
-        String sp_id="1";
-        BackgroundTask backgroundTask = new BackgroundTask(this);
-        backgroundTask.execute(sp_id);
-        finish();
-
+        adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,data);
+        lv.setAdapter(adapter);
     }
 
-    class BackgroundTask extends AsyncTask<String, Void, String> {
-        Context ctx;
-        String add_info_url;
+    private  void getData(){
 
-        public BackgroundTask(Context ctx) {
-            this.ctx = ctx;
-        }
-
-        public BackgroundTask() {
+        try {
+            URL url = new URL(address);
+            HttpURLConnection con=(HttpURLConnection) url.openConnection();
+            is=new BufferedInputStream(con.getInputStream());
 
         }
-
-        @Override
-        protected void onPreExecute() {
-            add_info_url = "http://kedarnadkarny.com/utarepair/appointment_status_spv.php";
+        catch (Exception e){
+            e.printStackTrace();
         }
 
-        @Override
-        protected String doInBackground(String... args) {
-            String sp_id=args[0];
-            try {
-                URL url = new URL(add_info_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter((new OutputStreamWriter(outputStream,"UTF-8")));
-                String data_string = URLEncoder.encode("sp_id","UTF-8")+"="+URLEncoder.encode(sp_id,"UTF-8");
-                bufferedWriter.write(data_string);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
-                String response="";
-                String line="";
-                while((line=bufferedReader.readLine())!=null){
-                    response+=line;
-                }
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return response;
+        try{
+            BufferedReader br=new BufferedReader(new InputStreamReader(is));
+            StringBuilder sb=new StringBuilder();
+            while((line=br.readLine())!=null){
+                sb.append(line +"\n");
+
             }
-            catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
+            is.close();
+            result=sb.toString();
+
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+
         }
 
-        @Override
-        protected void onProgressUpdate(Void... values) {
-        }
+        //parse json data
+        try{
+            JSONArray ja=new JSONArray(result);
+            JSONObject jo;
+            data=new String[ja.length()];
+            for(int i=0;i<ja.length();i++){
+                jo=ja.getJSONObject(i);
+                data[i]=jo.getString("customer_id")+"  "+jo.getString("title");
+            }
 
-        @Override
-        protected void onPostExecute(String s) {
-            Log.d("response", s);
-            Toast.makeText(ViewAppointmentStatusActivity.this, s, Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
+
+
 }
