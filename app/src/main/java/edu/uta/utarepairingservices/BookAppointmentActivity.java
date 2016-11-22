@@ -66,10 +66,10 @@ public class BookAppointmentActivity extends AppCompatActivity {
         }
 
         titleET = (EditText)findViewById(R.id.title);
-        descriptionET = (EditText)findViewById(R.id.describe_problem);
-        Book_Appointment = (Button)findViewById(R.id.book_appointment);
-        Browse_Gallery = (Button)findViewById(R.id.browse_gallary);
-        Take_Picture = (Button)findViewById(R.id.take_picture);
+      //  descriptionET = (EditText)findViewById(R.id.describe_problem);
+       // Book_Appointment = (Button)findViewById(R.id.book_appointment);
+       // Browse_Gallery = (Button)findViewById(R.id.browse_gallary);
+        //Take_Picture = (Button)findViewById(R.id.take_picture);
 
         Book_Appointment.setOnClickListener(new View.OnClickListener() {
             @Override
