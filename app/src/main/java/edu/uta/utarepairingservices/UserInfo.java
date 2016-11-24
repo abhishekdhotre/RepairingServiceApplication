@@ -24,7 +24,16 @@ public class UserInfo extends Application {
         this.uta_net_id = uta_net_id;
     }
 
-    public void setIDForCutomer() {
+    public void setIDForCustomer() {
         CustomerHomeActivity.setID(uta_net_id);
     }
+    public void setIDForServiceProvider() {
+        ServiceProviderHomeActivity.setID(uta_net_id);
+    }
+    public void setIDForAdmin() {
+        AdminHomeActivity.setID(uta_net_id);
+    }
+
+
+
 }
