@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,5 +9,95 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.uta.utarepairingservices.BookAppointmentActivity">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_below="@+id/textView13"
+        android:layout_alignLeft="@+id/textView13"
+        android:layout_alignStart="@+id/textView13"
+        android:layout_marginTop="17dp"
+        android:id="@+id/title" />
+
+    <TextView
+        android:text="Describe your problem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:id="@+id/textView14"
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/title"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignStart="@+id/title" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/describe_problem"
+        android:minLines="2"
+        android:layout_marginTop="18dp"
+        android:layout_below="@+id/textView14"
+        android:layout_alignLeft="@+id/textView14"
+        android:layout_alignStart="@+id/textView14"
+        android:maxLines="4" />
+
+    <TextView
+        android:text="Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="21dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="11dp"
+        android:id="@+id/textView13"
+        android:textSize="24sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Book Appointment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/book_appointment"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/textView14"
+        android:layout_alignEnd="@+id/textView14" />
+
+    <Button
+        android:text="TAKE PICTURE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/take_picture"
+        android:layout_above="@+id/imageToUpload"
+        android:layout_alignLeft="@+id/describe_problem"
+        android:layout_alignStart="@+id/describe_problem"
+        android:layout_marginBottom="17dp" />
+
+    <Button
+        android:text="Browse Gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/browse_gallary"
+        android:layout_alignBaseline="@+id/take_picture"
+        android:layout_alignBottom="@+id/take_picture"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/common_full_open_on_phone"
+        android:id="@+id/imageToUpload"
+        android:minHeight="112dp"
+        android:minWidth="100dp"
+        android:layout_above="@+id/book_appointment"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="11dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false" />
 
 </RelativeLayout>
