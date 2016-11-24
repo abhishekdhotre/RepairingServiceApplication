@@ -151,26 +151,24 @@ public class LoginActivity extends AppCompatActivity {
                 catch (Exception e){
                     e.printStackTrace();
                 }
-
+                UserInfo ui = new UserInfo();
+                ui.setUta_net_id(uta_net_id);
                 if(role_id.equals(null)){
                     Toast.makeText(getBaseContext(), "Null Pointer", Toast.LENGTH_SHORT).show();
                 }
                 else if(role_id.equals("1")) {
-                    UserInfo ui = new UserInfo();
-                    ui.setUta_net_id("4699");
-                    ui.setIDForCutomer();
+                    ui.setIDForCustomer();
                     Intent intent = new Intent(getBaseContext(), CustomerHomeActivity.class);
-                    intent.putExtra("data", s);
                     startActivity(intent);
                 }
                 else if (role_id.equals("2")) {
+                    ui.setIDForServiceProvider();
                     Intent intent = new Intent(getBaseContext(), ServiceProviderHomeActivity.class);
-                    intent.putExtra("data", s);
                     startActivity(intent);
                 }
                 else if (role_id.equals("3")) {
+                    ui.setIDForAdmin();
                     Intent intent = new Intent(getBaseContext(), AdminHomeActivity.class);
-                    intent.putExtra("data", s);
                     startActivity(intent);
                 }
 
