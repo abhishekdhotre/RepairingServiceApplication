@@ -156,6 +156,9 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Null Pointer", Toast.LENGTH_SHORT).show();
                 }
                 else if(role_id.equals("1")) {
+                    UserInfo ui = new UserInfo();
+                    ui.setUta_net_id("4699");
+                    ui.setIDForCutomer();
                     Intent intent = new Intent(getBaseContext(), CustomerHomeActivity.class);
                     intent.putExtra("data", s);
                     startActivity(intent);
