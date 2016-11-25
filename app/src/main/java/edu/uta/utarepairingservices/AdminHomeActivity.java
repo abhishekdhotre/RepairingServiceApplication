@@ -20,17 +20,15 @@ public class AdminHomeActivity extends AppCompatActivity {
     TextView AdminID;
     private static String ID = "";
     String role_id;
-
-    public static void setID(String ID) {
-        AdminHomeActivity.ID = ID;
-    }
+    UserInfo ui;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home);
+        ui = new UserInfo();
         AdminID = (TextView) findViewById(R.id.AdminID);
-        AdminID.setText("UTA ID: " + ID);
+        AdminID.setText("UTA ID: " + ui.getUta_net_id());
     }
 
     public void openAddUserActivity(View v) {
