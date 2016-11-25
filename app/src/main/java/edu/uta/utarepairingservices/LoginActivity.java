@@ -132,18 +132,18 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPreExecute();
             //Log.d("response", s);
-            if(!s.equals("failed")) {
+            String uta_net_id = null, role_id = null;
+            if(!s.equals("failed\n")) {
                 UserInfo userInfo = new UserInfo();
                 userInfo.setUta_net_id(utaNetId);
                 Toast.makeText(getBaseContext(), s, Toast.LENGTH_SHORT).show();
 
-                String uta_net_id = null, role_id = null;
+
                 //parse json data
                 try{
                     JSONArray ja=new JSONArray(s);
                     JSONObject jo;
                     data=new String[ja.length()];
-
                     jo=ja.getJSONObject(0);
                     uta_net_id = jo.getString("uta_net_id");
                     role_id = jo.getString("role_id");
@@ -173,7 +173,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
             else {
-                Toast.makeText(getBaseContext(), s, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Wrong Credentials!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                startActivity(intent);
             }
         }
     }
