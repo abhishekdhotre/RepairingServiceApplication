@@ -32,6 +32,8 @@ public class ViewProfileActivity extends Activity {
     String line=null;
     String result=null;
     String data;
+    String netId;
+    UserInfo user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class ViewProfileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
+        user = new UserInfo();
+        netId = user.getUta_net_id();
         getData();
 
         /*adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,data);
@@ -59,7 +63,7 @@ public class ViewProfileActivity extends Activity {
                 address ="http://kedarnadkarny.com/utarepair/view_admin_profile.php";
             }
 
-            address = address.concat("?UserId=").concat("1007");
+            address = address.concat("?UserId=").concat(netId);
             URL url = new URL(address);
             HttpURLConnection con=(HttpURLConnection) url.openConnection();
             is=new BufferedInputStream(con.getInputStream());
