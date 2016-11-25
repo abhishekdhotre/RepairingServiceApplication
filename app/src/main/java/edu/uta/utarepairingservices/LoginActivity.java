@@ -171,7 +171,6 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(getBaseContext(), AdminHomeActivity.class);
                     startActivity(intent);
                 }
-
             }
             else {
                 Toast.makeText(getBaseContext(), s, Toast.LENGTH_SHORT).show();
