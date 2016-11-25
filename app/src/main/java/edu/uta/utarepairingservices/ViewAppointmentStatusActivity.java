@@ -3,38 +3,24 @@ package edu.uta.utarepairingservices;
 // This Activity is for the Customer to see history of appointments and their status
 
 import android.app.Activity;
-import android.content.Context;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ViewAppointmentStatusActivity extends Activity {
@@ -45,6 +31,8 @@ public class ViewAppointmentStatusActivity extends Activity {
     InputStream is=null;
     String line=null;
     String result=null;
+    HashMap hm;
+    public static String accept;
     String[]data;
 
     @Override
@@ -58,8 +46,22 @@ public class ViewAppointmentStatusActivity extends Activity {
 
         adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,data);
         lv.setAdapter(adapter);
+        lv.setOnItemClickListener(onListClick);
+
     }
 
+    private AdapterView.OnItemClickListener onListClick=new AdapterView.OnItemClickListener(){
+        public void onItemClick(AdapterView<?>parent,View view,int position,long id){
+            Intent i=new Intent(ViewAppointmentStatusActivity.this, AcceptRejectActivity.class);
+           // i.putExtra(accept,data);
+            String val= (String) parent.getItemAtPosition(position);
+            i.putExtra("accept",val);
+            startActivity(i);
+
+
+        }
+
+    };
     private  void getData(){
 
         try {
@@ -75,6 +77,7 @@ public class ViewAppointmentStatusActivity extends Activity {
         try{
             BufferedReader br=new BufferedReader(new InputStreamReader(is));
             StringBuilder sb=new StringBuilder();
+
             while((line=br.readLine())!=null){
                 sb.append(line +"\n");
 
@@ -93,10 +96,13 @@ public class ViewAppointmentStatusActivity extends Activity {
         try{
             JSONArray ja=new JSONArray(result);
             JSONObject jo;
+            hm=new HashMap();
             data=new String[ja.length()];
             for(int i=0;i<ja.length();i++){
                 jo=ja.getJSONObject(i);
-                data[i]=jo.getString("customer_id")+"  "+jo.getString("title");
+                hm.put("customer_id",jo.getString("customer_id"));
+                hm.put("title",jo.getString("title"));
+                data[i]=jo.getString("request_id")+" | "+jo.getString("customer_id")+" | "+jo.getString("title")+" | "+jo.getString("status");
             }
 
         }
@@ -104,6 +110,12 @@ public class ViewAppointmentStatusActivity extends Activity {
             e.printStackTrace();
         }
     }
+
+
+
+
+
+
 
 
 }
