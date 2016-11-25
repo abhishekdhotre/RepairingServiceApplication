@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,6 +26,7 @@ import java.util.HashMap;
 
 public class ViewAppointmentStatusActivity extends Activity {
 
+    private static String uta_net_id="";
     ListView lv;
     ArrayAdapter<String> adapter;
     String address="http://kedarnadkarny.com/utarepair/appointment_status_spv.php";
@@ -34,6 +36,11 @@ public class ViewAppointmentStatusActivity extends Activity {
     HashMap hm;
     public static String accept;
     String[]data;
+    TextView infobox;
+
+    public static void setID(String uta_net_id) {
+        ViewAppointmentStatusActivity.uta_net_id = uta_net_id;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +54,8 @@ public class ViewAppointmentStatusActivity extends Activity {
         adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,data);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(onListClick);
-
+        infobox = (TextView) findViewById(R.id.infobox);
+        infobox.setText(uta_net_id);
     }
 
     private AdapterView.OnItemClickListener onListClick=new AdapterView.OnItemClickListener(){
@@ -57,10 +65,7 @@ public class ViewAppointmentStatusActivity extends Activity {
             String val= (String) parent.getItemAtPosition(position);
             i.putExtra("accept",val);
             startActivity(i);
-
-
         }
-
     };
     private  void getData(){
 
