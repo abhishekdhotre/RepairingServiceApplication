@@ -14,10 +14,7 @@ public class ServiceProviderHomeActivity extends AppCompatActivity {
     Button btnAppStatus;
 
     private static String uta_net_id = "";
-
-    public static void setID(String uta_net_id) {
-        ServiceProviderHomeActivity.uta_net_id = uta_net_id;
-    }
+    UserInfo ui;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +24,6 @@ public class ServiceProviderHomeActivity extends AppCompatActivity {
         btnAppStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserInfo ui = new UserInfo();
-                ui.setUta_net_id(uta_net_id);
-                ui.setUtaIdForViewAppointmentStatus_spv();
                 startActivity(new Intent(getBaseContext(), ViewAppointmentStatusActivity.class));
             }
         });
