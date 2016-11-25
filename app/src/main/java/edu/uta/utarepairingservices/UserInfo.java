@@ -33,6 +33,7 @@ public class UserInfo extends Application {
     public void setIDForAdmin() {
         AdminHomeActivity.setID(uta_net_id);
     }
+    public void setUtaIdForViewAppointmentStatus_spv() { ViewAppointmentStatusActivity.setID(uta_net_id); };
 
 
 
