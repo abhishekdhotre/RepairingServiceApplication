@@ -50,6 +50,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import cn.finalteam.okhttpfinal.BaseHttpRequestCallback;
+import okhttp3.Headers;
+import okhttp3.Response;
+
 import static android.R.attr.data;
 
 public class BookAppointmentActivity extends AppCompatActivity {
@@ -59,14 +63,27 @@ public class BookAppointmentActivity extends AppCompatActivity {
     Button Book_Appointment, Browse_Gallery, Take_Picture;
     private static final int RESULT_LOAD_IMAGE = 1;
     private static final int CAMERA_REQUEST = 1888;
-    private ImageView imageToUpload;
 
+    private  Context context;
+
+    private ImageView imageToUpload;
+    //private String imagePathTpUpload;
+
+    /*
+    private BaseHttpRequestCallback callback = new BaseHttpRequestCallback() {
+        @Override
+        public void onResponse(Response httpResponse, String response, Headers headers) {
+            Toast.makeText(context,response,Toast.LENGTH_SHORT).show();
+        }};
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_book_appointment);
+
+            context = this;
 
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -104,12 +121,12 @@ public class BookAppointmentActivity extends AppCompatActivity {
             public void onClick(View arg0) {
 
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
+            /*
                 File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_ALARMS);
                 String pictureDirectoryPath = pictureDirectory.getPath();
                 Uri data = Uri.parse(pictureDirectoryPath);
                 galleryIntent.setDataAndType(data, "image/*");
-
+            */
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
             }
 
@@ -132,6 +149,20 @@ public class BookAppointmentActivity extends AppCompatActivity {
                     backgroundTask.execute(titleST, descriptionST);
                     finish();
                 }
+                //Bitmap image = ((BitmapDrawable) imageToUpload.getDrawable()).getBitmap();
+
+                /*
+                 new HttpUtil(HttpUtil.FILE_PARAMS).addBody(
+                       new File(imagePathTpUpload)
+                 ).post(
+                        "save_picture.php",callback
+                 );
+
+                 */
+
+
+                //nevigate to next activity
+                startActivity(new Intent(BookAppointmentActivity.this, ViewAppointmentStatusActivity.class));
             }
         });
 
@@ -145,6 +176,9 @@ public class BookAppointmentActivity extends AppCompatActivity {
             if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
 
                 Uri selectedImage = data.getData();
+                imageToUpload.setImageURI(selectedImage);
+                //imagePathTpUpload = selectedImage.getPath();
+
                 /*
                 InputStream inputStream;
 
@@ -158,8 +192,8 @@ public class BookAppointmentActivity extends AppCompatActivity {
                     Toast.makeText(this, "Unable to open image", Toast.LENGTH_SHORT).show();
                 }
 
-                //   imageToUpload.setImageURI(selectedImage);
-                */
+
+
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
                 Cursor cursor = getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);
@@ -175,7 +209,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
                 // fileName = fileNameSegments[fileNameSegments.length - 1];
                 // Put file name in Async Http Post Param which will used in Php web app
                 //params.put("filename", fileName);
-
+            */
             }
             if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK && data != null) {
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
@@ -184,7 +218,8 @@ public class BookAppointmentActivity extends AppCompatActivity {
         //} catch (Exception e) {
          //   Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
     }
-/*
+
+    /*
     private class UploadImage extends AsyncTask<Void, Void, Void>{
 
         Bitmap image;
@@ -213,7 +248,8 @@ public class BookAppointmentActivity extends AppCompatActivity {
             return null;
         }
     }
-*/
+    */
+
     class BackgroundTask extends AsyncTask<String, Void, String> {
 
         String add_info_url;
@@ -229,7 +265,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
         protected String doInBackground(String... args) {
             String titleBT, descriptionBT;
             int customerID = 1;
-            int professionalID = 1;
+            int professionalID = 5;
             int statusID = 1;
 
             Calendar c = Calendar.getInstance();
