@@ -7,7 +7,8 @@ import android.app.Application;
 
 public class UserInfo extends Application {
 
-    private String uta_net_id;
+    private static String uta_net_id;
+    private static String RoleId;
 
     public UserInfo() {
     }
@@ -24,17 +25,12 @@ public class UserInfo extends Application {
         this.uta_net_id = uta_net_id;
     }
 
-    public void setIDForCustomer() {
-        CustomerHomeActivity.setID(uta_net_id);
+    public static String getRoleId() {
+        return RoleId;
     }
-    public void setIDForServiceProvider() {
-        ServiceProviderHomeActivity.setID(uta_net_id);
-    }
-    public void setIDForAdmin() {
-        AdminHomeActivity.setID(uta_net_id);
-    }
-    public void setUtaIdForViewAppointmentStatus_spv() { ViewAppointmentStatusActivity.setID(uta_net_id); };
 
-
+    public static void setRoleId(String roleId) {
+        RoleId = roleId;
+    }
 
 }
