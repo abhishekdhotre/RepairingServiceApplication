@@ -9,6 +9,8 @@ public class UserInfo extends Application {
 
     private static String uta_net_id;
     private static String RoleId;
+    private static int serviceId;
+    private static int spID;
 
     public UserInfo() {
     }
@@ -31,6 +33,22 @@ public class UserInfo extends Application {
 
     public static void setRoleId(String roleId) {
         RoleId = roleId;
+    }
+
+    public static int getServiceId() {
+        return serviceId;
+    }
+
+    public static void setServiceId(int serviceId) {
+        UserInfo.serviceId = serviceId;
+    }
+
+    public static int getSpID() {
+        return spID;
+    }
+
+    public static void setSpID(int spID) {
+        UserInfo.spID = spID;
     }
 
 }
