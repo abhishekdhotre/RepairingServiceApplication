@@ -32,7 +32,7 @@ public class ViewProfileActivity extends Activity {
 
     ListView lv;
     ArrayAdapter<String> adapter;
-    int RoleId = 2;
+    int RoleId;
     String address;
     InputStream is=null;
     String line=null;
@@ -50,11 +50,11 @@ public class ViewProfileActivity extends Activity {
         setContentView(R.layout.activity_view_profile);
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
 
+        //To be changed
         //RoleId = Integer.parseInt(UserInfo.getRoleId());
         //netId = UserInfo.getUta_net_id();
-
-        RoleId = 3;
-        netId = "1008";
+        RoleId = 2;
+        netId = "1032";
 
         getData();
 
@@ -78,7 +78,6 @@ public class ViewProfileActivity extends Activity {
             URL url = new URL(address);
             HttpURLConnection con=(HttpURLConnection) url.openConnection();
             is=new BufferedInputStream(con.getInputStream());
-            con.disconnect();
 
         }
         catch (Exception e){
@@ -136,6 +135,16 @@ public class ViewProfileActivity extends Activity {
                 textViewToChange = (TextView) findViewById(R.id.tvEmailValue);
                 textViewToChange.setText(jo.getString("email"));
 
+                try {
+                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+netId+"&RoleId="+RoleId);
+                    InputStream in = url.openStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(in);
+                    ImageView img = (ImageView) findViewById(R.id.imgProfile);
+                    img.setImageBitmap(bitmap);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
 
                 //Set Visibility for Customer
                 textViewToChange = (TextView) findViewById(R.id.tvRatingText);
@@ -173,6 +182,18 @@ public class ViewProfileActivity extends Activity {
 
                 RatingBar rb = (RatingBar) findViewById(R.id.ratingBar);
                 rb.setRating(Float.parseFloat(jo.getString("rating")));
+                rb.setEnabled(false);
+
+                try {
+                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+netId+"&RoleId="+RoleId);
+                    InputStream in = url.openStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(in);
+                    ImageView img = (ImageView) findViewById(R.id.imgProfile);
+                    img.setImageBitmap(bitmap);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
             }
             else if(RoleId==3){
                 TextView textViewToChange = (TextView) findViewById(R.id.tvViewProfileText);
@@ -191,7 +212,7 @@ public class ViewProfileActivity extends Activity {
                 textViewToChange.setText(jo.getString("email"));
 
                 try {
-                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+netId);
+                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+netId+"&RoleId="+RoleId);
                     InputStream in = url.openStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(in);
                     ImageView img = (ImageView) findViewById(R.id.imgProfile);
