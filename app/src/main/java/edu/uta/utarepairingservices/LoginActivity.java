@@ -30,7 +30,7 @@ import java.net.URLEncoder;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
-
+    //
     Button btnLogin;
     EditText utaNetIdET, passwordET;
     String utaNetId, password;
