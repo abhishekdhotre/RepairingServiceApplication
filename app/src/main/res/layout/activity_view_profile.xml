@@ -39,8 +39,9 @@
             android:paddingBottom="10px">>
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="250px"
-                android:src="@mipmap/ic_launcher"/>
+                android:layout_height="300px"
+                android:src="@mipmap/ic_launcher"
+                android:id="@+id/imgProfile"/>
         </LinearLayout>
 
         <LinearLayout

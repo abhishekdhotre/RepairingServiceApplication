@@ -3,9 +3,14 @@ package edu.uta.utarepairingservices;
 // Use the same Activity for all three users. I know the GUI is different. You can programmatically hide and show elements
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -19,6 +24,7 @@ import java.io.BufferedReader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 
 public class ViewProfileActivity extends Activity {
@@ -26,7 +32,7 @@ public class ViewProfileActivity extends Activity {
 
     ListView lv;
     ArrayAdapter<String> adapter;
-    int RoleId = 2;
+    int RoleId;
     String address;
     InputStream is=null;
     String line=null;
@@ -43,8 +49,13 @@ public class ViewProfileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-        user = new UserInfo();
-        netId = user.getUta_net_id();
+
+        //To be changed
+        RoleId = Integer.parseInt(UserInfo.getRoleId());
+        netId = UserInfo.getUta_net_id();
+        //RoleId = 2;
+        //netId = "1032";
+
         getData();
 
         /*adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,data);
@@ -81,6 +92,7 @@ public class ViewProfileActivity extends Activity {
             }
             is.close();
             result=sb.toString();
+            br.close();
         }
         catch (Exception e){
             e.printStackTrace();
@@ -123,6 +135,17 @@ public class ViewProfileActivity extends Activity {
                 textViewToChange = (TextView) findViewById(R.id.tvEmailValue);
                 textViewToChange.setText(jo.getString("email"));
 
+                try {
+                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+netId+"&RoleId="+RoleId);
+                    InputStream in = url.openStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(in);
+                    ImageView img = (ImageView) findViewById(R.id.imgProfile);
+                    img.setImageBitmap(bitmap);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+
                 //Set Visibility for Customer
                 textViewToChange = (TextView) findViewById(R.id.tvRatingText);
                 textViewToChange.setVisibility(View.INVISIBLE);
@@ -159,6 +182,18 @@ public class ViewProfileActivity extends Activity {
 
                 RatingBar rb = (RatingBar) findViewById(R.id.ratingBar);
                 rb.setRating(Float.parseFloat(jo.getString("rating")));
+                rb.setEnabled(false);
+
+                try {
+                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+netId+"&RoleId="+RoleId);
+                    InputStream in = url.openStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(in);
+                    ImageView img = (ImageView) findViewById(R.id.imgProfile);
+                    img.setImageBitmap(bitmap);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
             }
             else if(RoleId==3){
                 TextView textViewToChange = (TextView) findViewById(R.id.tvViewProfileText);
@@ -175,6 +210,17 @@ public class ViewProfileActivity extends Activity {
 
                 textViewToChange = (TextView) findViewById(R.id.tvEmailValue);
                 textViewToChange.setText(jo.getString("email"));
+
+                try {
+                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+netId+"&RoleId="+RoleId);
+                    InputStream in = url.openStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(in);
+                    ImageView img = (ImageView) findViewById(R.id.imgProfile);
+                    img.setImageBitmap(bitmap);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
 
                 //Set Visibility for Admin
                 textViewToChange = (TextView) findViewById(R.id.tvRatingText);
