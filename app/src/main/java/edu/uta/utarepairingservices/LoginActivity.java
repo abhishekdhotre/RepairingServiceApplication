@@ -1,5 +1,6 @@
 package edu.uta.utarepairingservices;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -30,13 +31,14 @@ import java.net.URLEncoder;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
-
+    //
     Button btnLogin;
     EditText utaNetIdET, passwordET;
     String utaNetId, password;
     AlertDialog alertDialog;
     String result=null;
     String[] data;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         utaNetIdET = (EditText) findViewById(R.id.utaNetIDET);
         passwordET = (EditText) findViewById(R.id.passwordET);
+        progressDialog = new ProgressDialog(getApplicationContext());
+        progressDialog.setTitle("Authorizing");
+        progressDialog.setMessage("Loading Profile...");
         btnLogin = (Button) findViewById(R.id.buttonLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... args) {
+
             String utanetid, password;
             utanetid = args[0];
             password = args[1];
@@ -129,21 +135,26 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            progressDialog.show();
+        }
+
+        @Override
         protected void onPostExecute(String s) {
             super.onPreExecute();
             //Log.d("response", s);
-            if(!s.equals("failed")) {
+            String uta_net_id = null, role_id = null;
+            if(!s.equals("failed\n")) {
                 UserInfo userInfo = new UserInfo();
                 userInfo.setUta_net_id(utaNetId);
                 Toast.makeText(getBaseContext(), s, Toast.LENGTH_SHORT).show();
 
-                String uta_net_id = null, role_id = null;
                 //parse json data
                 try{
                     JSONArray ja=new JSONArray(s);
                     JSONObject jo;
                     data=new String[ja.length()];
-
                     jo=ja.getJSONObject(0);
                     uta_net_id = jo.getString("uta_net_id");
                     role_id = jo.getString("role_id");
@@ -151,32 +162,35 @@ public class LoginActivity extends AppCompatActivity {
                 catch (Exception e){
                     e.printStackTrace();
                 }
-
+                UserInfo ui = new UserInfo();
+                ui.setUta_net_id(uta_net_id);
+                ui.setRoleId(role_id);
                 if(role_id.equals(null)){
                     Toast.makeText(getBaseContext(), "Null Pointer", Toast.LENGTH_SHORT).show();
                 }
                 else if(role_id.equals("1")) {
                     Intent intent = new Intent(getBaseContext(), CustomerHomeActivity.class);
-                    intent.putExtra("data", s);
                     startActivity(intent);
                 }
                 else if (role_id.equals("2")) {
                     Intent intent = new Intent(getBaseContext(), ServiceProviderHomeActivity.class);
-                    intent.putExtra("data", s);
                     startActivity(intent);
                 }
                 else if (role_id.equals("3")) {
                     Intent intent = new Intent(getBaseContext(), AdminHomeActivity.class);
-                    intent.putExtra("data", s);
                     startActivity(intent);
                 }
-
             }
             else {
-                Toast.makeText(getBaseContext(), s, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Wrong Credentials!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                startActivity(intent);
             }
+            progressDialog.hide();
         }
     }
+
+
 
     @Override
     protected void onPause() {
