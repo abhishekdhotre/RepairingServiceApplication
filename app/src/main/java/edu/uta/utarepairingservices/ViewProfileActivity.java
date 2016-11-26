@@ -3,9 +3,14 @@ package edu.uta.utarepairingservices;
 // Use the same Activity for all three users. I know the GUI is different. You can programmatically hide and show elements
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -19,6 +24,7 @@ import java.io.BufferedReader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 
 public class ViewProfileActivity extends Activity {
@@ -43,8 +49,13 @@ public class ViewProfileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-        user = new UserInfo();
-        netId = user.getUta_net_id();
+
+        //RoleId = Integer.parseInt(UserInfo.getRoleId());
+        //netId = UserInfo.getUta_net_id();
+
+        RoleId = 3;
+        netId = "1008";
+
         getData();
 
         /*adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,data);
@@ -67,6 +78,7 @@ public class ViewProfileActivity extends Activity {
             URL url = new URL(address);
             HttpURLConnection con=(HttpURLConnection) url.openConnection();
             is=new BufferedInputStream(con.getInputStream());
+            con.disconnect();
 
         }
         catch (Exception e){
@@ -81,6 +93,7 @@ public class ViewProfileActivity extends Activity {
             }
             is.close();
             result=sb.toString();
+            br.close();
         }
         catch (Exception e){
             e.printStackTrace();
@@ -122,6 +135,7 @@ public class ViewProfileActivity extends Activity {
 
                 textViewToChange = (TextView) findViewById(R.id.tvEmailValue);
                 textViewToChange.setText(jo.getString("email"));
+
 
                 //Set Visibility for Customer
                 textViewToChange = (TextView) findViewById(R.id.tvRatingText);
@@ -175,6 +189,17 @@ public class ViewProfileActivity extends Activity {
 
                 textViewToChange = (TextView) findViewById(R.id.tvEmailValue);
                 textViewToChange.setText(jo.getString("email"));
+
+                try {
+                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+netId);
+                    InputStream in = url.openStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(in);
+                    ImageView img = (ImageView) findViewById(R.id.imgProfile);
+                    img.setImageBitmap(bitmap);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
 
                 //Set Visibility for Admin
                 textViewToChange = (TextView) findViewById(R.id.tvRatingText);
