@@ -51,10 +51,10 @@ public class ViewProfileActivity extends Activity {
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
 
         //To be changed
-        //RoleId = Integer.parseInt(UserInfo.getRoleId());
-        //netId = UserInfo.getUta_net_id();
-        RoleId = 2;
-        netId = "1032";
+        RoleId = Integer.parseInt(UserInfo.getRoleId());
+        netId = UserInfo.getUta_net_id();
+        //RoleId = 2;
+        //netId = "1032";
 
         getData();
 
