@@ -69,6 +69,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
     private ImageView imageToUpload;
     //private String imagePathTpUpload;
 
+
     /*
     private BaseHttpRequestCallback callback = new BaseHttpRequestCallback() {
         @Override
