@@ -11,6 +11,7 @@ public class UserInfo extends Application {
     private static String RoleId;
     private static int serviceId;
     private static int spID;
+    private static int custID;
 
     public UserInfo() {
     }
@@ -19,7 +20,7 @@ public class UserInfo extends Application {
         this.uta_net_id = uta_net_id;
     }
 
-    public String getUta_net_id() {
+    public static String getUta_net_id() {
         return uta_net_id;
     }
 
@@ -51,4 +52,11 @@ public class UserInfo extends Application {
         UserInfo.spID = spID;
     }
 
+    public static int getCustID() {
+        return custID;
+    }
+
+    public static void setCustID(int custID) {
+        UserInfo.custID = custID;
+    }
 }
