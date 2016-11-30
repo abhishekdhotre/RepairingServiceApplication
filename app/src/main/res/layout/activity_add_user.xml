@@ -112,8 +112,8 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText3"
-        android:layout_below="@+id/textView5"
+        android:id="@+id/houseNoET"
+        android:layout_below="@+id/postalcodeET"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="10dp" />
@@ -131,7 +131,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText4"
+        android:id="@+id/streetET"
         android:layout_below="@+id/textView6"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -143,14 +143,14 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/postalcode"
         android:id="@+id/textView7"
-        android:layout_below="@+id/editText4"
+        android:layout_below="@+id/streetET"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText5"
+        android:id="@+id/postalcodeET"
         android:layout_below="@+id/textView7"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -162,14 +162,14 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/city"
         android:id="@+id/textView8"
-        android:layout_below="@+id/editText5"
+        android:layout_below="@+id/postalcodeET"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText6"
+        android:id="@+id/cityET"
         android:layout_below="@+id/textView8"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -181,14 +181,14 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/contact"
         android:id="@+id/textView9"
-        android:layout_below="@+id/editText6"
+        android:layout_below="@+id/cityET"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText7"
+        android:id="@+id/contactET"
         android:layout_below="@+id/textView9"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -200,7 +200,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/email"
         android:id="@+id/textView10"
-        android:layout_below="@+id/editText7"
+        android:layout_below="@+id/contactET"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -209,11 +209,25 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/editText8"
+        android:id="@+id/emailET"
         android:layout_below="@+id/textView10"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="PASSWORD"
+        android:id="@+id/textView13" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/passwordET" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -234,7 +248,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/isActive"
         android:id="@+id/textView11" />
-s
+
     <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -9,4 +9,44 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.uta.utarepairingservices.CustomerHomeActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Customer Home Page"
+        android:id="@+id/textView14"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Book Appointment"
+        android:id="@+id/btnBookApp"
+        android:layout_below="@+id/textView14"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VIEW PROFILE"
+        android:id="@+id/btnViewProfile"
+        android:layout_below="@+id/btnBookApp"
+        android:layout_alignLeft="@+id/btnBookApp"
+        android:layout_alignStart="@+id/btnBookApp"
+        android:layout_marginTop="32dp"
+        android:layout_alignRight="@+id/btnBookApp"
+        android:layout_alignEnd="@+id/btnBookApp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VIEW APPOINTMENT STATUS"
+        android:id="@+id/btnAppStatus"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/btnViewProfile"
+        android:layout_alignStart="@+id/btnViewProfile"
+        android:layout_alignRight="@+id/btnViewProfile"
+        android:layout_alignEnd="@+id/btnViewProfile" />
+
 </RelativeLayout>

@@ -20,10 +20,22 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View Appointment Status"
+        android:text="VIEW APPOINTMENT STATUS"
         android:id="@+id/btnAppStatus"
         android:layout_below="@+id/textView15"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="42dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VIEW PROFILE"
+        android:id="@+id/btnViewProfile"
+        android:layout_below="@+id/btnAppStatus"
+        android:layout_alignLeft="@+id/btnAppStatus"
+        android:layout_alignStart="@+id/btnAppStatus"
+        android:layout_marginTop="26dp"
+        android:layout_alignRight="@+id/btnAppStatus"
+        android:layout_alignEnd="@+id/btnAppStatus" />
 
 </RelativeLayout>

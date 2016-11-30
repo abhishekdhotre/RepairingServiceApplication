@@ -15,19 +15,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="View Appointment Status"
+            android:text="APPOINTMENT STATUS"
+            android:layout_gravity="center"
             android:id="@+id/textView13" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/infobox" />
-
-    <ListView
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/listView" />
+            android:text="New Text"
+            android:id="@+id/infobox" />
+
+        <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/listView" />
 
 
     </LinearLayout>

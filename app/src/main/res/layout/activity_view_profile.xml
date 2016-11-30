@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,7 +9,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="edu.uta.utarepairingservices.ViewProfileActivity">
+    tools:context="edu.uta.utarepairingservices.ViewProfileActivity"
+    >
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -27,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textAlignment="center"
-                android:textSize="75px"
+                android:textSize="50px"
                 android:text="Profile"
                 android:id="@+id/tvViewProfileText" />
         </LinearLayout>
@@ -61,7 +65,7 @@
                     android:id="@+id/tvNameText" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Abhishek Dhotre"
@@ -81,10 +85,9 @@
                     android:id="@+id/tvGenderText" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Male"
                     android:id="@+id/tvGenderValue" />
             </LinearLayout>
 
@@ -101,10 +104,9 @@
                     android:id="@+id/tvContactText"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="+1 (682)559-7883"
                     android:id="@+id/tvContactValue"/>
             </LinearLayout>
 
@@ -120,10 +122,9 @@
                     android:text="E-Mail"
                     android:id="@+id/tvEmailText"/>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="asd@mavs.uta.edu"
                     android:id="@+id/tvEmailValue"/>
 
             </LinearLayout>
@@ -141,10 +142,9 @@
                     android:id="@+id/tvHouseNoText" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="204"
                     android:id="@+id/tvHouseNoValue" />
             </LinearLayout>
 
@@ -161,10 +161,9 @@
                     android:id="@+id/tvStreetText" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="820, S Cooper"
                     android:id="@+id/tvStreetValue" />
 
             </LinearLayout>
@@ -182,10 +181,9 @@
                     android:id="@+id/tvPostalCodeText" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="76008"
                     android:id="@+id/tvPostalCodeValue" />
 
             </LinearLayout>
@@ -203,10 +201,9 @@
                     android:id="@+id/tvCityText" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Arlington"
                     android:id="@+id/tvCityValue" />
 
             </LinearLayout>
@@ -231,6 +228,15 @@
                     android:layout_below="@+id/linearLayout"
                     android:layout_centerHorizontal="true" />
             </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnBookAppointment"
+                android:text="BOOK THIS PERSON"
+                />
+
         </LinearLayout>
     </LinearLayout>
-</RelativeLayout>
+
+</ScrollView>
