@@ -155,12 +155,4 @@ public class ViewAppointmentStatusActivity extends Activity {
             e.printStackTrace();
         }
     }
-
-
-
-
-
-
-
-
 }

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ public class ViewAppointment extends AppCompatActivity {
     String s;
     String title, description, datetime, fullname;
     private static String status;
+    String requrl=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,7 @@ public class ViewAppointment extends AppCompatActivity {
                 btnAccept.setVisibility(View.VISIBLE);
                 btnReject.setVisibility(View.VISIBLE);
             }
-            if(status.equals("Accepted")) {
+            if(status.equals("Accept")) {
                 btnComplete.setVisibility(View.VISIBLE);
             }
             if(status.equals("Reject") || status.equals("Complete")) {
@@ -122,6 +124,123 @@ public class ViewAppointment extends AppCompatActivity {
             }
         });
 
+        // Accept Appointment
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    String address = "http://kedarnadkarny.com/utarepair/accept_appointment.php";
+                    URL url = new URL(address);
+                    HttpURLConnection con=(HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("POST");
+                    con.setDoOutput(true);
+                    OutputStream outputStream = con.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter((new OutputStreamWriter(outputStream,"UTF-8")));
+                    String data_string = URLEncoder.encode("request_id","UTF-8")+"="+URLEncoder.encode(String.valueOf(requestID),"UTF-8");
+                    bufferedWriter.write(data_string);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+
+                    is=new BufferedInputStream(con.getInputStream());
+                    BufferedReader br=new BufferedReader(new InputStreamReader(is));
+                    StringBuilder sb=new StringBuilder();
+
+                    while((line=br.readLine())!=null){
+                        sb.append(line);
+                    }
+                    is.close();
+                    result=sb.toString();
+                    if(result.equals("UPDATED")) {
+                        Toast.makeText(getBaseContext(), "Appointment Accepted!", Toast.LENGTH_LONG);
+                        ui.setMessage("Appointment Accepted!");
+                        startActivity(new Intent(getBaseContext(), ServiceProviderHomeActivity.class));
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        // Reject
+        btnReject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    String address = "http://kedarnadkarny.com/utarepair/reject_appointment.php";
+                    URL url = new URL(address);
+                    HttpURLConnection con=(HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("POST");
+                    con.setDoOutput(true);
+                    OutputStream outputStream = con.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter((new OutputStreamWriter(outputStream,"UTF-8")));
+                    String data_string = URLEncoder.encode("request_id","UTF-8")+"="+URLEncoder.encode(String.valueOf(requestID),"UTF-8");
+                    bufferedWriter.write(data_string);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+
+                    is=new BufferedInputStream(con.getInputStream());
+                    BufferedReader br=new BufferedReader(new InputStreamReader(is));
+                    StringBuilder sb=new StringBuilder();
+
+                    while((line=br.readLine())!=null){
+                        sb.append(line);
+                    }
+                    is.close();
+                    result=sb.toString();
+                    if(result.equals("UPDATED")) {
+                        Toast.makeText(getBaseContext(), "Appointment Rejected!", Toast.LENGTH_LONG).show();
+                        ui.setMessage("Appointment Rejected!");
+                        startActivity(new Intent(getBaseContext(), ServiceProviderHomeActivity.class));
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        btnComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    String address = "http://kedarnadkarny.com/utarepair/complete_appointment.php";
+                    URL url = new URL(address);
+                    HttpURLConnection con=(HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("POST");
+                    con.setDoOutput(true);
+                    OutputStream outputStream = con.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter((new OutputStreamWriter(outputStream,"UTF-8")));
+                    String data_string = URLEncoder.encode("request_id","UTF-8")+"="+URLEncoder.encode(String.valueOf(requestID),"UTF-8");
+                    bufferedWriter.write(data_string);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+
+                    is=new BufferedInputStream(con.getInputStream());
+                    BufferedReader br=new BufferedReader(new InputStreamReader(is));
+                    StringBuilder sb=new StringBuilder();
+
+                    while((line=br.readLine())!=null){
+                        sb.append(line);
+                    }
+                    is.close();
+                    result=sb.toString();
+                    if(result.equals("UPDATED")) {
+                        Toast.makeText(getBaseContext(), "Appointment Completed!", Toast.LENGTH_LONG).show();
+                        ui.setMessage("Appointment Completed!");
+                        startActivity(new Intent(getBaseContext(), ServiceProviderHomeActivity.class));
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
+//end of creator
     }
 
     public void cancelAppointment() {

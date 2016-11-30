@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,8 +29,13 @@ public class AdminHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_home);
         ui = new UserInfo();
         AdminID = (TextView) findViewById(R.id.AdminID);
-        AdminID.setText("UTA ID: " + ui.getUta_net_id());
         btnLogout = (Button) findViewById(R.id.btnLogout);
+
+        String message = ui.getLoginMessage();
+        if(message.equals("login")) {
+            Toast.makeText(this, "Login Successful!", Toast.LENGTH_LONG).show();
+            ui.setLoginMessage("antilogin");
+        }
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override

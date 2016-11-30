@@ -23,6 +23,18 @@ public class ServiceProviderHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_service_provider_home);
         btnAppStatus = (Button) findViewById(R.id.btnAppStatus);
         btnViewProfile = (Button) findViewById(R.id.btnViewProfile);
+        String message = "";
+        message = ui.getLoginMessage();
+        if(message.equals("login")) {
+            Toast.makeText(this, "Login Successful!", Toast.LENGTH_LONG).show();
+            ui.setLoginMessage("");
+        }
+
+        message = ui.getMessage();
+        if(message!="") {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }
+
         btnAppStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

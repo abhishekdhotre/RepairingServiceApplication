@@ -13,6 +13,8 @@ public class UserInfo extends Application {
     private static int spID;
     private static int custID;
     private static int requestID;
+    private static String loginMessage;
+    private static String message="";
 
     public UserInfo() {
     }
@@ -67,5 +69,21 @@ public class UserInfo extends Application {
 
     public static void setRequestID(int requestID) {
         UserInfo.requestID = requestID;
+    }
+
+    public static String getLoginMessage() {
+        return loginMessage;
+    }
+
+    public static void setLoginMessage(String loginMessage) {
+        UserInfo.loginMessage = loginMessage;
+    }
+
+    public static String getMessage() {
+        return message;
+    }
+
+    public static void setMessage(String message) {
+        UserInfo.message = message;
     }
 }

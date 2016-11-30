@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CustomerHomeActivity extends AppCompatActivity {
 
@@ -16,6 +17,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
     TextView tv14;
     UserInfo ui;
     Button btnBookAppt, btnViewProfile, btnAppStatus, btnLogout;
+    String s="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,17 @@ public class CustomerHomeActivity extends AppCompatActivity {
         btnAppStatus = (Button) findViewById(R.id.btnAppStatus);
         ui = new UserInfo();
         btnLogout = (Button) findViewById(R.id.btnLogout);
+
+        String message = ui.getLoginMessage();
+        if(message.equals("login")) {
+            Toast.makeText(this, "Login Successful!", Toast.LENGTH_LONG).show();
+            ui.setLoginMessage("antilogin");
+        }
+        message = ui.getMessage();
+        if(!message.equals("")) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            ui.setMessage("");
+        }
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
