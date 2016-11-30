@@ -1,7 +1,7 @@
 package edu.uta.utarepairingservices;
 
 // This activity sif ro the Customer to provide rating for the Service Provider after the task has been compeleted
-//provide rating
+
 import android.media.Rating;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
