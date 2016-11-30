@@ -50,10 +50,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-import cn.finalteam.okhttpfinal.BaseHttpRequestCallback;
-import okhttp3.Headers;
-import okhttp3.Response;
-
 import static android.R.attr.data;
 
 public class BookAppointmentActivity extends AppCompatActivity {
@@ -265,8 +261,9 @@ public class BookAppointmentActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... args) {
             String titleBT, descriptionBT;
-            int customerID = 1;
-            int professionalID = 5;
+            UserInfo ui = new UserInfo();
+            String customerID = ui.getUta_net_id();
+            int professionalID = ui.getSpID();
             int statusID = 1;
 
             Calendar c = Calendar.getInstance();

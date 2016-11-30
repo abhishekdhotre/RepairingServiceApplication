@@ -12,41 +12,55 @@ import android.widget.ArrayAdapter;
 
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 
 public class ViewAppointmentStatusActivity extends Activity {
 
-    private static String uta_net_id="";
     ListView lv;
     ArrayAdapter<String> adapter;
-    String address="http://kedarnadkarny.com/utarepair/appointment_status_spv.php";
+    String address="";
     InputStream is=null;
     String line=null;
     String result=null;
     HashMap hm;
-    public static String accept;
-    String[]data;
+    String[] data;
+    String[] requestIDList;
     TextView infobox;
-
-    public static void setID(String uta_net_id) {
-        ViewAppointmentStatusActivity.uta_net_id = uta_net_id;
-    }
+    String s;
+    UserInfo ui;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_appointment_status);
         lv = (ListView) findViewById(R.id.listView);
+        ui = new UserInfo();
+
+        s = getIntent().getStringExtra("view");
+        if(s.equals("view_sp")) {
+            address="http://kedarnadkarny.com/utarepair/appointment_status_spv.php";
+        }
+        else if(s.equals("view_cu")) {
+            address="http://kedarnadkarny.com/utarepair/appointment_status_cv.php";
+        }
+        else {
+            Toast.makeText(getBaseContext(), "SOME ERROR", Toast.LENGTH_LONG).show();
+        }
 
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
         getData();
@@ -54,17 +68,29 @@ public class ViewAppointmentStatusActivity extends Activity {
         adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,data);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(onListClick);
+        ui = new UserInfo();
         infobox = (TextView) findViewById(R.id.infobox);
-        infobox.setText(uta_net_id);
+        infobox.setText(ui.getUta_net_id());
+        infobox.setVisibility(View.GONE);
     }
 
     private AdapterView.OnItemClickListener onListClick=new AdapterView.OnItemClickListener(){
         public void onItemClick(AdapterView<?>parent,View view,int position,long id){
-            Intent i=new Intent(ViewAppointmentStatusActivity.this, AcceptRejectActivity.class);
-           // i.putExtra(accept,data);
-            String val= (String) parent.getItemAtPosition(position);
-            i.putExtra("accept",val);
-            startActivity(i);
+            if(s.equals("view_sp")) {
+                Intent i=new Intent(ViewAppointmentStatusActivity.this, AcceptRejectActivity.class);
+                String val= (String) parent.getItemAtPosition(position);
+                i.putExtra("accept",val);
+                startActivity(i);
+            }
+            else if(s.equals("view_cu")) {
+                ui.setRequestID(Integer.parseInt(requestIDList[position]));
+                Intent i=new Intent(ViewAppointmentStatusActivity.this, ViewAppointment.class);
+                i.putExtra("view", "view_cu");
+                startActivity(i);
+            }
+
+
+
         }
     };
     private  void getData(){
@@ -72,14 +98,24 @@ public class ViewAppointmentStatusActivity extends Activity {
         try {
             URL url = new URL(address);
             HttpURLConnection con=(HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setDoOutput(true);
+            OutputStream outputStream = con.getOutputStream();
+            BufferedWriter bufferedWriter = new BufferedWriter((new OutputStreamWriter(outputStream,"UTF-8")));
+            String data_string = "";
+            if(s.equals("view_cu")) {
+                data_string = URLEncoder.encode("uta_net_id", "UTF-8") + "=" + URLEncoder.encode(ui.getUta_net_id(), "UTF-8");
+            }
+            else if(s.equals("view_sp")) {
+                //data_string = URLEncoder.encode("sp_id", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(ui), "UTF-8");
+            }
+
+            bufferedWriter.write(data_string);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+            outputStream.close();
+
             is=new BufferedInputStream(con.getInputStream());
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
-        try{
             BufferedReader br=new BufferedReader(new InputStreamReader(is));
             StringBuilder sb=new StringBuilder();
 
@@ -89,8 +125,6 @@ public class ViewAppointmentStatusActivity extends Activity {
             }
             is.close();
             result=sb.toString();
-
-
         }
         catch (Exception e){
             e.printStackTrace();
@@ -103,12 +137,27 @@ public class ViewAppointmentStatusActivity extends Activity {
             JSONObject jo;
             hm=new HashMap();
             data=new String[ja.length()];
-            for(int i=0;i<ja.length();i++){
-                jo=ja.getJSONObject(i);
-                hm.put("customer_id",jo.getString("customer_id"));
-                hm.put("title",jo.getString("title"));
-                data[i]=jo.getString("request_id")+" | "+jo.getString("customer_id")+" | "+jo.getString("title")+" | "+jo.getString("status");
+            requestIDList=new String[ja.length()];
+            if(s.equals("view_cu")) {
+                for(int i=0;i<ja.length();i++){
+                    jo=ja.getJSONObject(i);
+                    hm.put("request_id",jo.getString("request_id"));
+                    hm.put("title",jo.getString("title"));
+                    hm.put("status",jo.getString("status"));
+                    data[i]=jo.getString("request_id")+" | "+jo.getString("title")+" | "+jo.getString("status");
+                    requestIDList[i] = jo.getString("request_id");
+                }
             }
+            else if(s.equals("view_sp")) {
+                for(int i=0;i<ja.length();i++){
+                    jo=ja.getJSONObject(i);
+                    hm.put("customer_id",jo.getString("customer_id"));
+                    hm.put("title",jo.getString("title"));
+                    data[i]=jo.getString("request_id")+" | "+jo.getString("customer_id")+" | "+jo.getString("title")+" | "+jo.getString("status");
+                    requestIDList[i] = jo.getString("request_id");
+                }
+            }
+
 
         }
         catch (Exception e){

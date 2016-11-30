@@ -12,6 +12,7 @@ public class UserInfo extends Application {
     private static int serviceId;
     private static int spID;
     private static int custID;
+    private static int requestID;
 
     public UserInfo() {
     }
@@ -58,5 +59,13 @@ public class UserInfo extends Application {
 
     public static void setCustID(int custID) {
         UserInfo.custID = custID;
+    }
+
+    public static int getRequestID() {
+        return requestID;
+    }
+
+    public static void setRequestID(int requestID) {
+        UserInfo.requestID = requestID;
     }
 }
