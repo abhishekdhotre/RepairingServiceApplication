@@ -27,6 +27,7 @@ public class ProvideRatingActivity extends AppCompatActivity {
     RatingBar ratingBar;
 
     @Override
+    //create
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provide_rating);
