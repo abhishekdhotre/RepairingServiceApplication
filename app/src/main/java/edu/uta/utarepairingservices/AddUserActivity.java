@@ -156,7 +156,7 @@ public class AddUserActivity extends Activity {
             is.close();
             result=sb.toString();
             if(result.equals("ADDED")) {
-                Toast.makeText(getBaseContext(), "User Registered!", Toast.LENGTH_LONG);
+                Toast.makeText(getBaseContext(), "User Registered!", Toast.LENGTH_LONG).show();
                 clearForm((ViewGroup)findViewById(R.id.rootLayout));
             }
         }
