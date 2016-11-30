@@ -65,7 +65,7 @@ public class ViewProfileActivity extends Activity {
         super.onCreate(savedInstanceState);
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
 
-        tvNameValue = (TextView) findViewById(R.id.tvNameValue);
+        /*tvNameValue = (TextView) findViewById(R.id.tvNameValue);
         tvGenderValue = (TextView) findViewById(R.id.tvGenderValue);
         tvContactValue = (TextView) findViewById(R.id.tvContactValue);
         tvEmailValue = (TextView) findViewById(R.id.tvEmailValue);
@@ -74,26 +74,28 @@ public class ViewProfileActivity extends Activity {
         tvPostalCodeValue = (TextView) findViewById(R.id.tvPostalCodeValue);
         tvCityValue = (TextView) findViewById(R.id.tvCityValue);
         tvViewProfileText = (TextView) findViewById(R.id.tvViewProfileText);
-        tvRating = (TextView) findViewById(R.id.tvRating);
+        tvRating = (TextView) findViewById(R.id.tvRating);*/
 
         btnBook = (Button) findViewById(R.id.btnBookAppointment);
 
         ui = new UserInfo();
         s = getIntent().getStringExtra("view");
         if(s.equals("view_sp")) {
-            tvViewProfileText.setText("Service Provider Profile");
+            //tvViewProfileText.setText("Service Provider Profile");
             address = "http://kedarnadkarny.com/utarepair/view_service_provider_profile.php";
             netId = ui.getUta_net_id();
+            RoleId = Integer.parseInt(UserInfo.getRoleId());
             btnBook.setVisibility(View.GONE);
         }
         else if(s.equals("view_sp2")) {
-            tvViewProfileText.setText("Service Provider Profile");
+            //tvViewProfileText.setText("Service Provider Profile");
+            netId = String.valueOf(ui.getSpID());
+            RoleId = 2;
             address = "http://kedarnadkarny.com/utarepair/view_service_provider_profile2.php";
             btnBook.setVisibility(View.VISIBLE);
         }
         else if(s.equals("view_cu")) {
             address = "http://kedarnadkarny.com/utarepair/view_customer_profile.php";
-            netId = ui.getUta_net_id();
             btnBook.setVisibility(View.GONE);
             RoleId = Integer.parseInt(UserInfo.getRoleId());
             netId = UserInfo.getUta_net_id();
@@ -103,7 +105,7 @@ public class ViewProfileActivity extends Activity {
         }
 
         getData();
-        setProfileData();
+        //setProfileData();
 
         btnBook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +116,231 @@ public class ViewProfileActivity extends Activity {
     }
 
     private  void getData(){
+        try {
+            /*if(RoleId==1) {
+                address ="http://kedarnadkarny.com/utarepair/view_customer_profile.php";
+            }
+            else if(RoleId==2) {
+                address ="http://kedarnadkarny.com/utarepair/view_service_provider_profile.php";
+            }
+            else if(RoleId==3){
+                address ="http://kedarnadkarny.com/utarepair/view_admin_profile.php";
+            }
+
+            address = address.concat("?UserId=").concat(netId);
+            URL url = new URL(address);
+            HttpURLConnection con=(HttpURLConnection) url.openConnection();*/
+
+            URL url = new URL(address);
+            HttpURLConnection con=(HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setDoOutput(true);
+            OutputStream outputStream = con.getOutputStream();
+            BufferedWriter bufferedWriter = new BufferedWriter((new OutputStreamWriter(outputStream,"UTF-8")));
+            String data_string = "";
+            if(s.equals("view_cu")) {
+                data_string = URLEncoder.encode("UserId", "UTF-8") + "=" + URLEncoder.encode(netId, "UTF-8");
+            }
+            else if(s.equals("view_sp")) {
+                data_string = URLEncoder.encode("UserId", "UTF-8") + "=" + URLEncoder.encode(netId, "UTF-8");
+            }
+            else if(s.equals("view_sp2")) {
+                data_string = URLEncoder.encode("SpId", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(ui.getSpID()), "UTF-8");
+            }
+
+            bufferedWriter.write(data_string);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+            outputStream.close();
+            is=new BufferedInputStream(con.getInputStream());
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            BufferedReader br=new BufferedReader(new InputStreamReader(is));
+            StringBuilder sb=new StringBuilder();
+            while((line=br.readLine())!=null){
+                sb.append(line +"\n");
+            }
+            is.close();
+            result=sb.toString();
+            br.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        //parse json data
+        try{
+            JSONArray ja=new JSONArray(result);
+            JSONObject jo;
+            data=new String();
+
+            jo=ja.getJSONObject(0);
+
+            if(RoleId==1) {
+
+                TextView textViewToChange = (TextView) findViewById(R.id.tvViewProfileText);
+                textViewToChange.setText("Customer" + " " + "Profile");
+
+                textViewToChange = (TextView) findViewById(R.id.tvNameValue);
+                textViewToChange.setText(jo.getString("firstname") +" "+ jo.getString("lastname"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvGenderValue);
+                textViewToChange.setText(jo.getString("gender"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvHouseNoValue);
+                textViewToChange.setText(jo.getString("house_no"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvStreetValue);
+                textViewToChange.setText(jo.getString("street"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvPostalCodeValue);
+                textViewToChange.setText(jo.getString("postal_code"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvCityValue);
+                textViewToChange.setText(jo.getString("city"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvContactValue);
+                textViewToChange.setText(jo.getString("contact"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvEmailValue);
+                textViewToChange.setText(jo.getString("email"));
+
+                try {
+                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+netId+"&RoleId="+RoleId);
+                    InputStream in = url.openStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(in);
+                    ImageView img = (ImageView) findViewById(R.id.imgProfile);
+                    img.setImageBitmap(bitmap);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                //Set Visibility for Customer
+                textViewToChange = (TextView) findViewById(R.id.tvRatingText);
+                textViewToChange.setVisibility(View.INVISIBLE);
+                RatingBar rb = (RatingBar) findViewById(R.id.ratingBar);
+                rb.setVisibility(View.INVISIBLE);
+            }
+            else if(RoleId==2) {
+                TextView textViewToChange = (TextView) findViewById(R.id.tvViewProfileText);
+                textViewToChange.setText("Service Provider" + " " + "Profile");
+
+                textViewToChange = (TextView) findViewById(R.id.tvNameValue);
+                textViewToChange.setText(jo.getString("firstname") +" "+ jo.getString("lastname"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvGenderValue);
+                textViewToChange.setText(jo.getString("gender"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvHouseNoValue);
+                textViewToChange.setText(jo.getString("house_no"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvStreetValue);
+                textViewToChange.setText(jo.getString("street"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvPostalCodeValue);
+                textViewToChange.setText(jo.getString("postal_code"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvCityValue);
+                textViewToChange.setText(jo.getString("city"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvContactValue);
+                textViewToChange.setText(jo.getString("contact"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvEmailValue);
+                textViewToChange.setText(jo.getString("email"));
+
+                /*RatingBar rb = (RatingBar) findViewById(R.id.ratingBar);
+                rb.setRating(Float.parseFloat(jo.getString("rating")));
+                rb.setEnabled(false);*/
+
+                tvRating = (TextView) findViewById(R.id.tvRating);
+                tvRating.setText(jo.getString("rating"));
+
+                try {
+                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+netId+"&RoleId="+RoleId);
+                    InputStream in = url.openStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(in);
+                    ImageView img = (ImageView) findViewById(R.id.imgProfile);
+                    img.setImageBitmap(bitmap);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+            else if(RoleId==3){
+                TextView textViewToChange = (TextView) findViewById(R.id.tvViewProfileText);
+                textViewToChange.setText("Admin" + " " + "Profile");
+
+                textViewToChange = (TextView) findViewById(R.id.tvNameValue);
+                textViewToChange.setText(jo.getString("firstname") +" "+ jo.getString("lastname"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvGenderValue);
+                textViewToChange.setText(jo.getString("gender"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvContactValue);
+                textViewToChange.setText(jo.getString("contact"));
+
+                textViewToChange = (TextView) findViewById(R.id.tvEmailValue);
+                textViewToChange.setText(jo.getString("email"));
+
+                try {
+                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+netId+"&RoleId="+RoleId);
+                    InputStream in = url.openStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(in);
+                    ImageView img = (ImageView) findViewById(R.id.imgProfile);
+                    img.setImageBitmap(bitmap);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                //Set Visibility for Admin
+                textViewToChange = (TextView) findViewById(R.id.tvRatingText);
+                textViewToChange.setVisibility(View.INVISIBLE);
+                RatingBar rb = (RatingBar) findViewById(R.id.ratingBar);
+                rb.setVisibility(View.INVISIBLE);
+                textViewToChange = (TextView) findViewById(R.id.tvHouseNoValue);
+                textViewToChange.setVisibility(View.INVISIBLE);
+                textViewToChange = (TextView) findViewById(R.id.tvStreetValue);
+                textViewToChange.setVisibility(View.INVISIBLE);
+                textViewToChange = (TextView) findViewById(R.id.tvPostalCodeValue);
+                textViewToChange.setVisibility(View.INVISIBLE);
+                textViewToChange = (TextView) findViewById(R.id.tvCityValue);
+                textViewToChange.setVisibility(View.INVISIBLE);
+                textViewToChange = (TextView) findViewById(R.id.tvHouseNoText);
+                textViewToChange.setVisibility(View.INVISIBLE);
+                textViewToChange = (TextView) findViewById(R.id.tvStreetText);
+                textViewToChange.setVisibility(View.INVISIBLE);
+                textViewToChange = (TextView) findViewById(R.id.tvPostalCodeText);
+                textViewToChange.setVisibility(View.INVISIBLE);
+                textViewToChange = (TextView) findViewById(R.id.tvCityText);
+                textViewToChange.setVisibility(View.INVISIBLE);
+            }
+            else{
+                try {
+                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+spID+"&RoleId="+0);
+                    InputStream in = url.openStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(in);
+                    ImageView img = (ImageView) findViewById(R.id.imgProfile);
+                    img.setImageBitmap(bitmap);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+   /* private  void getData(){
 
         try {
             URL url = new URL(address);
@@ -187,5 +414,5 @@ public class ViewProfileActivity extends Activity {
         tvPostalCodeValue.setText(""+postal);
         tvCityValue.setText(city);
         tvRating.setText(""+rating);
-    }
+    }*/
 }
