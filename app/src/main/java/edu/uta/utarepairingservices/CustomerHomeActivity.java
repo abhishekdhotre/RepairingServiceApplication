@@ -15,7 +15,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
     private static String ID = "";
     TextView tv14;
     UserInfo ui;
-    Button btnBookAppt, btnViewProfile, btnAppStatus;
+    Button btnBookAppt, btnViewProfile, btnAppStatus, btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,16 @@ public class CustomerHomeActivity extends AppCompatActivity {
         btnBookAppt = (Button) findViewById(R.id.btnBookApp);
         btnAppStatus = (Button) findViewById(R.id.btnAppStatus);
         ui = new UserInfo();
-        tv14.setText(ui.getUta_net_id());
+        btnLogout = (Button) findViewById(R.id.btnLogout);
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), LoginActivity.class);
+                i.putExtra("logout", "logout");
+                startActivity(i);
+            }
+        });
 
         btnBookAppt.setOnClickListener(new View.OnClickListener() {
             @Override

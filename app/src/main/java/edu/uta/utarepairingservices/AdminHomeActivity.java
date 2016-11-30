@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,9 +19,8 @@ import java.util.Arrays;
 public class AdminHomeActivity extends AppCompatActivity {
 
     TextView AdminID;
-    private static String ID = "";
-    String role_id;
     UserInfo ui;
+    Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +29,25 @@ public class AdminHomeActivity extends AppCompatActivity {
         ui = new UserInfo();
         AdminID = (TextView) findViewById(R.id.AdminID);
         AdminID.setText("UTA ID: " + ui.getUta_net_id());
+        btnLogout = (Button) findViewById(R.id.btnLogout);
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), LoginActivity.class);
+                i.putExtra("logout", "logout");
+                startActivity(i);
+            }
+        });
     }
 
     public void openAddUserActivity(View v) {
         Intent intent = new Intent(this, AddUserActivity.class);
+        startActivity(intent);
+    }
+
+    public void openDeleteUserActivity(View v) {
+        Intent intent = new Intent(this, DeleteUserActivity.class);
         startActivity(intent);
     }
 }

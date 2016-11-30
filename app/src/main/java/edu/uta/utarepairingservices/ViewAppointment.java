@@ -28,14 +28,15 @@ import java.util.Objects;
 public class ViewAppointment extends AppCompatActivity {
 
     TextView txtTitle, txtDescription, txtPosted, txtStatus;
-    Button btnCancel, btnRate;
+    Button btnCancel, btnRate, btnAccept, btnReject, btnComplete;
     UserInfo ui;
     int requestID;
     InputStream is=null;
     String line=null;
     String result=null;
     String s;
-    String title, description, status, datetime, fullname;
+    String title, description, datetime, fullname;
+    private static String status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,10 @@ public class ViewAppointment extends AppCompatActivity {
         txtStatus = (TextView) findViewById(R.id.txtStatus);
         btnCancel = (Button) findViewById(R.id.btnCancel);
         btnRate = (Button) findViewById(R.id.btnRate);
-        btnRate.setVisibility(View.GONE);
+        btnAccept = (Button) findViewById(R.id.btnAccept);
+        btnReject = (Button) findViewById(R.id.btnReject);
+        btnComplete = (Button) findViewById(R.id.btnComplete);
+        btnComplete.setVisibility(View.GONE);
         s = getIntent().getStringExtra("view");
         ui = new UserInfo();
         requestID = ui.getRequestID();
@@ -58,13 +62,49 @@ public class ViewAppointment extends AppCompatActivity {
         txtStatus.setText(status);
         txtPosted.setText(datetime);
 
-        if (status.equals("Accept") || status.equals("Cancelled") || status.equals("Reject")) {
-            //btnCancel.setVisibility(View.GONE);
+        if(s.equals("view_sp")) {
+            btnAccept.setVisibility(View.GONE);
+            btnReject.setVisibility(View.GONE);
+            btnRate.setVisibility(View.GONE);
+            btnCancel.setVisibility(View.GONE);
+            btnComplete.setVisibility(View.GONE);
+            if(status.equals("Pending")) {
+                btnAccept.setVisibility(View.VISIBLE);
+                btnReject.setVisibility(View.VISIBLE);
+            }
+            if(status.equals("Accepted")) {
+                btnComplete.setVisibility(View.VISIBLE);
+            }
+            if(status.equals("Reject") || status.equals("Complete")) {
+                btnAccept.setVisibility(View.GONE);
+                btnReject.setVisibility(View.GONE);
+            }
         }
-        else if(status.equals("Complete")) {
-            //btnRate.setVisibility(View.VISIBLE);
-            //btnCancel.setVisibility(View.GONE);
+        else if(s.equals("view_cu")) {
+            btnAccept.setVisibility(View.GONE);
+            btnReject.setVisibility(View.GONE);
+            btnRate.setVisibility(View.GONE);
+            btnCancel.setVisibility(View.GONE);
+            btnComplete.setVisibility(View.GONE);
+
+            if (status.equals("Pending")){
+                btnCancel.setVisibility(View.VISIBLE);
+            }
+
+            if (status.equals("Accept")) {
+                Toast.makeText(getBaseContext(), "Job Accepted by Service Provider!", Toast.LENGTH_LONG).show();
+            }
+
+            if(status.equals("Reject")) {
+                Toast.makeText(getBaseContext(), "Job Rejected by Service Provider!", Toast.LENGTH_LONG).show();
+            }
+
+            if(status.equals("Complete")) {
+                btnRate.setVisibility(View.VISIBLE);
+            }
         }
+
+
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +156,6 @@ public class ViewAppointment extends AppCompatActivity {
         }
         catch (Exception e){
             e.printStackTrace();
-
         }
     }
 
@@ -166,7 +205,7 @@ public class ViewAppointment extends AppCompatActivity {
                     description = jo.getString("description");
                     status = jo.getString("status");
                     datetime = jo.getString("datetime");
-                    fullname = jo.getString("firstname") + jo.getString("lastname");
+                    fullname = jo.getString("firstname") +" "+ jo.getString("lastname");
                 }
                 Log.d("response", reqID + " " + title + " " + description + " " + status + " " + datetime);
             }

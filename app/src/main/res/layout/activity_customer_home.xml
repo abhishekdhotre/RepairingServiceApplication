@@ -49,4 +49,16 @@
         android:layout_alignRight="@+id/btnViewProfile"
         android:layout_alignEnd="@+id/btnViewProfile" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LOGOUT"
+        android:id="@+id/btnLogout"
+        android:layout_below="@+id/btnAppStatus"
+        android:layout_alignLeft="@+id/btnAppStatus"
+        android:layout_alignStart="@+id/btnAppStatus"
+        android:layout_marginTop="34dp"
+        android:layout_alignRight="@+id/btnAppStatus"
+        android:layout_alignEnd="@+id/btnAppStatus" />
+
 </RelativeLayout>

@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     InputStream is=null;
     String line=null;
     UserInfo ui;
+    String s="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,18 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading Profile...");
         btnLogin = (Button) findViewById(R.id.buttonLogin);
         ui = new UserInfo();
+        s = getIntent().getStringExtra("logout");
+
+        try {
+            if(s.equals("logout") || !s.isEmpty()) {
+                Toast.makeText(getBaseContext(), "You have been logged out!", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        catch(NullPointerException e) {
+            e.printStackTrace();
+        }
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,12 +112,9 @@ public class LoginActivity extends AppCompatActivity {
             }
             is.close();
             result=sb.toString();
-
-
         }
         catch (Exception e){
             e.printStackTrace();
-
         }
 
         //parse json data

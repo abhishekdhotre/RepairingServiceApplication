@@ -41,7 +41,6 @@ public class SelectServiceProviderActivity extends AppCompatActivity {
     String line=null;
     String result=null;
     HashMap hm;
-    public static String accept;
     String[] data;
     String[] rating;
     String[] spID;
@@ -66,18 +65,16 @@ public class SelectServiceProviderActivity extends AppCompatActivity {
 
     private AdapterView.OnItemClickListener onListClick=new AdapterView.OnItemClickListener(){
         public void onItemClick(AdapterView<?>parent, View view, int position, long id){
-            Toast.makeText(getBaseContext(), spID[position], Toast.LENGTH_LONG).show();
+            //Toast.makeText(getBaseContext(), spID[position], Toast.LENGTH_LONG).show();
             UserInfo ui = new UserInfo();
             ui.setSpID(Integer.parseInt(spID[position]));
             Intent intent = new Intent(getBaseContext(), ViewProfileActivity.class);
-            intent.putExtra("view", "view_sp");
+            intent.putExtra("view", "view_sp2");
             startActivity(intent);
         }
     };
 
     private  void getData(){
-
-        String query="";
 
         try {
             address = "http://kedarnadkarny.com/utarepair/list_service_providers.php";

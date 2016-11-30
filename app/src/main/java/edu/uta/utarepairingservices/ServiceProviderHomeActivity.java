@@ -15,6 +15,7 @@ public class ServiceProviderHomeActivity extends AppCompatActivity {
 
     private static String uta_net_id = "";
     UserInfo ui;
+    Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +26,29 @@ public class ServiceProviderHomeActivity extends AppCompatActivity {
         btnAppStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "C1", Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(getBaseContext(), ViewAppointmentStatusActivity.class));
+                Intent intent = new Intent(getBaseContext(), ViewAppointmentStatusActivity.class);
+                intent.putExtra("view", "view_sp");
+                startActivity(intent);
+            }
+        });
+
+        btnLogout = (Button) findViewById(R.id.btnLogout);
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), LoginActivity.class);
+                i.putExtra("logout", "logout");
+                startActivity(i);
             }
         });
 
         btnViewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "C2", Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(getBaseContext(), ViewProfileActivity.class));
+                Intent i = new Intent(getBaseContext(), ViewProfileActivity.class);
+                        i.putExtra("view", "view_sp");
+                startActivity(i);
             }
         });
     }

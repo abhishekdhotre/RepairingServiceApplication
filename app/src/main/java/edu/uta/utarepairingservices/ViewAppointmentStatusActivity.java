@@ -77,9 +77,9 @@ public class ViewAppointmentStatusActivity extends Activity {
     private AdapterView.OnItemClickListener onListClick=new AdapterView.OnItemClickListener(){
         public void onItemClick(AdapterView<?>parent,View view,int position,long id){
             if(s.equals("view_sp")) {
-                Intent i=new Intent(ViewAppointmentStatusActivity.this, AcceptRejectActivity.class);
-                String val= (String) parent.getItemAtPosition(position);
-                i.putExtra("accept",val);
+                ui.setRequestID(Integer.parseInt(requestIDList[position]));
+                Intent i=new Intent(ViewAppointmentStatusActivity.this, ViewAppointment.class);
+                i.putExtra("view", "view_sp");
                 startActivity(i);
             }
             else if(s.equals("view_cu")) {
@@ -88,9 +88,6 @@ public class ViewAppointmentStatusActivity extends Activity {
                 i.putExtra("view", "view_cu");
                 startActivity(i);
             }
-
-
-
         }
     };
     private  void getData(){
@@ -107,7 +104,7 @@ public class ViewAppointmentStatusActivity extends Activity {
                 data_string = URLEncoder.encode("uta_net_id", "UTF-8") + "=" + URLEncoder.encode(ui.getUta_net_id(), "UTF-8");
             }
             else if(s.equals("view_sp")) {
-                //data_string = URLEncoder.encode("sp_id", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(ui), "UTF-8");
+                data_string = URLEncoder.encode("uta_net_id", "UTF-8") + "=" + URLEncoder.encode(ui.getUta_net_id(), "UTF-8");
             }
 
             bufferedWriter.write(data_string);
@@ -135,15 +132,11 @@ public class ViewAppointmentStatusActivity extends Activity {
         try{
             JSONArray ja=new JSONArray(result);
             JSONObject jo;
-            hm=new HashMap();
             data=new String[ja.length()];
             requestIDList=new String[ja.length()];
             if(s.equals("view_cu")) {
                 for(int i=0;i<ja.length();i++){
                     jo=ja.getJSONObject(i);
-                    hm.put("request_id",jo.getString("request_id"));
-                    hm.put("title",jo.getString("title"));
-                    hm.put("status",jo.getString("status"));
                     data[i]=jo.getString("request_id")+" | "+jo.getString("title")+" | "+jo.getString("status");
                     requestIDList[i] = jo.getString("request_id");
                 }
@@ -151,9 +144,7 @@ public class ViewAppointmentStatusActivity extends Activity {
             else if(s.equals("view_sp")) {
                 for(int i=0;i<ja.length();i++){
                     jo=ja.getJSONObject(i);
-                    hm.put("customer_id",jo.getString("customer_id"));
-                    hm.put("title",jo.getString("title"));
-                    data[i]=jo.getString("request_id")+" | "+jo.getString("customer_id")+" | "+jo.getString("title")+" | "+jo.getString("status");
+                    data[i]=jo.getString("request_id")+" | "+jo.getString("title")+" | "+jo.getString("status");
                     requestIDList[i] = jo.getString("request_id");
                 }
             }

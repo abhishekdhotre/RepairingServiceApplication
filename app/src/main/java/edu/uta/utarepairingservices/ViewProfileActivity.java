@@ -49,11 +49,13 @@ public class ViewProfileActivity extends Activity {
     Button btnBook;
     int spID;
     String s;
+    UserInfo ui;
 
     String name, gender, email, street, city;
     int contact, houseNo, postal;
+    float rating;
 
-    TextView tvNameValue, tvGenderValue, tvContactValue, tvEmailValue, tvHouseNoValue, tvStreetValue, tvPostalCodeValue, tvCityValue, tvViewProfileText;
+    TextView tvNameValue, tvGenderValue, tvContactValue, tvEmailValue, tvHouseNoValue, tvStreetValue, tvPostalCodeValue, tvCityValue, tvViewProfileText, tvRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,14 +74,22 @@ public class ViewProfileActivity extends Activity {
         tvPostalCodeValue = (TextView) findViewById(R.id.tvPostalCodeValue);
         tvCityValue = (TextView) findViewById(R.id.tvCityValue);
         tvViewProfileText = (TextView) findViewById(R.id.tvViewProfileText);
+        tvRating = (TextView) findViewById(R.id.tvRating);
+
         btnBook = (Button) findViewById(R.id.btnBookAppointment);
 
-        UserInfo ui = new UserInfo();
+        ui = new UserInfo();
         s = getIntent().getStringExtra("view");
         if(s.equals("view_sp")) {
             tvViewProfileText.setText("Service Provider Profile");
             address = "http://kedarnadkarny.com/utarepair/view_service_provider_profile.php";
-            spID = ui.getSpID();
+            netId = ui.getUta_net_id();
+            btnBook.setVisibility(View.GONE);
+        }
+        else if(s.equals("view_sp2")) {
+            tvViewProfileText.setText("Service Provider Profile");
+            address = "http://kedarnadkarny.com/utarepair/view_service_provider_profile2.php";
+            btnBook.setVisibility(View.VISIBLE);
         }
         else if(s.equals("view_cu")) {
             address = "http://kedarnadkarny.com/utarepair/view_customer_profile.php";
@@ -98,7 +108,6 @@ public class ViewProfileActivity extends Activity {
         btnBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(ViewProfileActivity.this, "BOOKED", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(ViewProfileActivity.this, BookAppointmentActivity.class));
             }
         });
@@ -118,9 +127,11 @@ public class ViewProfileActivity extends Activity {
                 data_string = URLEncoder.encode("UserId", "UTF-8") + "=" + URLEncoder.encode(netId, "UTF-8");
             }
             else if(s.equals("view_sp")) {
-                data_string = URLEncoder.encode("sp_id", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(spID), "UTF-8");
+                data_string = URLEncoder.encode("UserId", "UTF-8") + "=" + URLEncoder.encode(netId, "UTF-8");
             }
-
+            else if(s.equals("view_sp2")) {
+                data_string = URLEncoder.encode("SpId", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(ui.getSpID()), "UTF-8");
+            }
 
             bufferedWriter.write(data_string);
             bufferedWriter.flush();
@@ -132,7 +143,7 @@ public class ViewProfileActivity extends Activity {
             StringBuilder sb=new StringBuilder();
 
             while((line=br.readLine())!=null){
-                sb.append(line +"\n");
+                sb.append(line);
 
             }
             is.close();
@@ -159,6 +170,7 @@ public class ViewProfileActivity extends Activity {
             contact = Integer.parseInt(jo.getString("contact"));
             houseNo = Integer.parseInt(jo.getString("house_no"));
             postal = Integer.parseInt(jo.getString("postal_code"));
+            rating = Float.parseFloat(jo.getString("rating"));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -174,5 +186,6 @@ public class ViewProfileActivity extends Activity {
         tvStreetValue.setText(street);
         tvPostalCodeValue.setText(""+postal);
         tvCityValue.setText(city);
+        tvRating.setText(""+rating);
     }
 }

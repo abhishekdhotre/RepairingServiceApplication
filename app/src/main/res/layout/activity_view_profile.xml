@@ -43,7 +43,7 @@
             android:paddingBottom="10px">>
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="300px"
+                android:layout_height="200px"
                 android:src="@mipmap/ic_launcher"
                 android:id="@+id/imgProfile"/>
         </LinearLayout>
@@ -62,14 +62,15 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Name"
-                    android:id="@+id/tvNameText" />
+                    android:id="@+id/tvNameText"
+                    android:textSize="25px" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Abhishek Dhotre"
-                    android:id="@+id/tvNameValue" />
+                    android:id="@+id/tvNameValue"
+                    android:textSize="30px" />
             </LinearLayout>
 
             <LinearLayout
@@ -82,13 +83,15 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Gender"
-                    android:id="@+id/tvGenderText" />
+                    android:id="@+id/tvGenderText"
+                    android:textSize="25px" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:id="@+id/tvGenderValue" />
+                    android:id="@+id/tvGenderValue"
+                    android:textSize="30px" />
             </LinearLayout>
 
             <LinearLayout
@@ -101,13 +104,15 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Contact"
-                    android:id="@+id/tvContactText"/>
+                    android:id="@+id/tvContactText"
+                    android:textSize="25px" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:id="@+id/tvContactValue"/>
+                    android:id="@+id/tvContactValue"
+                    android:textSize="30px" />
             </LinearLayout>
 
             <LinearLayout
@@ -120,12 +125,14 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="E-Mail"
-                    android:id="@+id/tvEmailText"/>
+                    android:id="@+id/tvEmailText"
+                    android:textSize="25px" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:id="@+id/tvEmailValue"/>
+                    android:id="@+id/tvEmailValue"
+                    android:textSize="30px" />
 
             </LinearLayout>
 
@@ -139,13 +146,15 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="House No."
-                    android:id="@+id/tvHouseNoText" />
+                    android:id="@+id/tvHouseNoText"
+                    android:textSize="25px" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:id="@+id/tvHouseNoValue" />
+                    android:id="@+id/tvHouseNoValue"
+                    android:textSize="30px" />
             </LinearLayout>
 
             <LinearLayout
@@ -158,13 +167,15 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Street"
-                    android:id="@+id/tvStreetText" />
+                    android:id="@+id/tvStreetText"
+                    android:textSize="25px" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:id="@+id/tvStreetValue" />
+                    android:id="@+id/tvStreetValue"
+                    android:textSize="30px" />
 
             </LinearLayout>
 
@@ -178,13 +189,15 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Postal Code"
-                    android:id="@+id/tvPostalCodeText" />
+                    android:id="@+id/tvPostalCodeText"
+                    android:textSize="25px" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:id="@+id/tvPostalCodeValue" />
+                    android:id="@+id/tvPostalCodeValue"
+                    android:textSize="30px" />
 
             </LinearLayout>
 
@@ -198,13 +211,15 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="City"
-                    android:id="@+id/tvCityText" />
+                    android:id="@+id/tvCityText"
+                    android:textSize="25px" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:id="@+id/tvCityValue" />
+                    android:id="@+id/tvCityValue"
+                    android:textSize="30px" />
 
             </LinearLayout>
 
@@ -219,14 +234,16 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Rating"
                     android:layout_marginTop="30px"
-                    android:id="@+id/tvRatingText"/>
-                <RatingBar
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvRatingText"
+                    android:textSize="25px" />
+
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ratingBar"
-                    android:rating="5"
-                    android:layout_below="@+id/linearLayout"
-                    android:layout_centerHorizontal="true" />
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/tvRating"
+                    android:textSize="30px"
+                    android:layout_marginTop="30px" />
             </LinearLayout>
 
             <Button
@@ -234,7 +251,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btnBookAppointment"
                 android:text="BOOK THIS PERSON"
-                />
+                android:layout_marginTop="50px" />
 
         </LinearLayout>
     </LinearLayout>
