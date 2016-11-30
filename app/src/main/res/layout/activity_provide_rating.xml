@@ -9,42 +9,31 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.uta.utarepairingservices.ProvideRatingActivity">
 
-    <TextView
-        android:text="Provide Rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="117dp"
-        android:layout_marginStart="117dp"
-        android:layout_marginTop="39dp"
-        android:id="@+id/textView16" />
-
-    <TextView
-        android:text="Rate for xyz"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView16"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp"
-        android:id="@+id/textView17" />
-
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView17"
+        android:id="@+id/ratingBar"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
-        android:id="@+id/ratingBar" />
+        android:layout_marginTop="166dp"
+        android:numStars="5" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/txtHeader"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp" />
 
     <Button
-        android:text="Rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="SUBMIT"
+        android:id="@+id/btnSubmit"
         android:layout_below="@+id/ratingBar"
-        android:layout_alignLeft="@+id/textView17"
-        android:layout_alignStart="@+id/textView17"
-        android:layout_marginTop="27dp"
-        android:id="@+id/submitRating" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp" />
 </RelativeLayout>
