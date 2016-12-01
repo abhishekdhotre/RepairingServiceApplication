@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/rootLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -100,7 +108,8 @@
         android:text="CANCEL APPOINTMENT"
         android:id="@+id/btnCancel"
         android:layout_below="@+id/txtStatus"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -140,4 +149,14 @@
         android:id="@+id/btnComplete"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/imageView2"
+        android:layout_below="@+id/txtStatus"
+        android:layout_toRightOf="@+id/textView20"
+        android:layout_toEndOf="@+id/textView20" />
 </RelativeLayout>
+
+</ScrollView>
