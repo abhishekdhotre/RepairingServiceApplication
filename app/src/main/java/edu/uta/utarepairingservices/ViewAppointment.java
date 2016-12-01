@@ -1,12 +1,15 @@
 package edu.uta.utarepairingservices;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -306,6 +309,17 @@ public class ViewAppointment extends AppCompatActivity {
             }
             is.close();
             result=sb.toString();
+
+            try {
+                url = new URL("http://kedarnadkarny.com/utarepair/view_appointment_image.php?request_id="+requestID);
+                InputStream in = url.openStream();
+                Bitmap bitmap = BitmapFactory.decodeStream(in);
+                ImageView img = (ImageView) findViewById(R.id.imageView2);
+                img.setImageBitmap(bitmap);
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
         }
         catch (Exception e){
             e.printStackTrace();
