@@ -85,10 +85,10 @@ public class BookAppointmentActivity extends AppCompatActivity {
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             if(networkInfo!=null && networkInfo.isConnected()) {
-                Toast.makeText(this, "Connected!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Connected!", Toast.LENGTH_SHORT).show();
             }
             else {
-                Toast.makeText(this, "No connection!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "No connection!", Toast.LENGTH_SHORT).show();
             }
         }
         catch (Exception e){
@@ -116,7 +116,6 @@ public class BookAppointmentActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
             }
@@ -129,6 +128,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 titleST = titleET.getText().toString();
                 descriptionST = descriptionET.getText().toString();
+
                 if(TextUtils.isEmpty(titleST)) {
                     Toast.makeText(getBaseContext(), "Please enter the tile!", Toast.LENGTH_SHORT).show();
                 }
@@ -156,12 +156,21 @@ public class BookAppointmentActivity extends AppCompatActivity {
             con.setRequestMethod("POST");
             con.setDoOutput(true);
             OutputStream outputStream = con.getOutputStream();
+
+            Bitmap bitmap = ((BitmapDrawable)imageToUpload.getDrawable()).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
+            byte[] byte_arr = stream.toByteArray();
+            String img_str = Base64.encodeToString(byte_arr, Base64.DEFAULT);
+
             BufferedWriter bufferedWriter = new BufferedWriter((new OutputStreamWriter(outputStream,"UTF-8")));
             String data_string = URLEncoder.encode("title","UTF-8")+"="+URLEncoder.encode(titleST,"UTF-8")+"&"+
                     URLEncoder.encode("description","UTF-8")+"="+URLEncoder.encode(descriptionST,"UTF-8")+"&"+
                     URLEncoder.encode("uta_net_id","UTF-8")+"="+URLEncoder.encode(ui.getUta_net_id(),"UTF-8")+"&"+
                     URLEncoder.encode("date_time","UTF-8")+"="+URLEncoder.encode(datetime,"UTF-8")+"&"+
-                    URLEncoder.encode("professional_id","UTF-8")+"="+URLEncoder.encode(String.valueOf(ui.getSpID()),"UTF-8");
+                    URLEncoder.encode("professional_id","UTF-8")+"="+URLEncoder.encode(String.valueOf(ui.getSpID()),"UTF-8")+"&"+
+                    URLEncoder.encode("Image","UTF-8")+"="+URLEncoder.encode(img_str,"UTF-8");
+
             bufferedWriter.write(data_string);
             bufferedWriter.flush();
             bufferedWriter.close();
@@ -184,6 +193,13 @@ public class BookAppointmentActivity extends AppCompatActivity {
         }
         catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            imageToUpload.setImageBitmap(photo);
         }
     }
 }
