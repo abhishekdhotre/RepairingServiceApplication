@@ -11,11 +11,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -33,15 +35,16 @@ import java.net.URLEncoder;
 
 public class AddUserActivity extends Activity {
 
-    Spinner roleSpinner;
+    Spinner roleSpinner, spSpinner;
     EditText firstNameET, lastNameET, houseNoET, streetET, postalcodeET, cityET, contactET, emailET, passwordET;
-    String first_name, last_name, house_no, street, postalcode, city, contact, email, role, password;
+    String first_name, last_name, house_no, street, postalcode, city, contact, email, role, password, serviceTypeSt, serviceID;
     Button REG;
     String gender = "";
     String result=null;
     InputStream is=null;
     String line=null;
     RadioButton maleRad, femaleRad;
+    TextView stype;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +59,19 @@ public class AddUserActivity extends Activity {
             Toast.makeText(this, "No connection!", Toast.LENGTH_SHORT).show();
         }
 
+        stype = (TextView) findViewById(R.id.textView14);
         roleSpinner = (Spinner)findViewById(R.id.roleSpinner);
+        spSpinner = (Spinner) findViewById(R.id.spSpinner);
+        spSpinner.setVisibility(View.GONE);
+        stype.setVisibility(View.GONE);
         String[] items = new String[]{"Customer", "Service Provider"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, items);
         roleSpinner.setAdapter(adapter);
+
+        String[] serviceTypeList = new String[]{"Pest Control", "Plumbing", "Flooring", "Gardening"};
+        final ArrayAdapter<String> serviceType = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, serviceTypeList);
+        spSpinner.setAdapter(serviceType);
+
         firstNameET = (EditText)findViewById(R.id.firstNameET);
         lastNameET = (EditText)findViewById(R.id.lastNameET);
         houseNoET = (EditText)findViewById(R.id.houseNoET);
@@ -87,11 +99,24 @@ public class AddUserActivity extends Activity {
                 contact = contactET.getText().toString();
                 email = emailET.getText().toString();
                 role = roleSpinner.getSelectedItem().toString();
+                serviceTypeSt = spSpinner.getSelectedItem().toString();
                 if (role.toLowerCase().equals("customer")) {
                     role = "1";
                 }
                 else {
                     role = "2";
+                }
+                if (serviceTypeSt.toLowerCase().equals("pest control")) {
+                    serviceID = "1";
+                }
+                else if(serviceTypeSt.toLowerCase().equals("plumbing")) {
+                    serviceID = "2";
+                }
+                else if (serviceTypeSt.toLowerCase().equals("flooring")) {
+                    serviceID = "3";
+                }
+                else if(serviceTypeSt.toLowerCase().equals("gardening")) {
+                    serviceID = "4";
                 }
                 password = passwordET.getText().toString();
 
@@ -104,6 +129,26 @@ public class AddUserActivity extends Activity {
                 else {
                     registerUser();
                 }
+            }
+        });
+
+        roleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                role = roleSpinner.getSelectedItem().toString();
+                if (role.toLowerCase().equals("customer")) {
+                    spSpinner.setVisibility(View.GONE);
+                    stype.setVisibility(View.GONE);
+                }
+                else {
+                    spSpinner.setVisibility(View.VISIBLE);
+                    stype.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
@@ -140,6 +185,7 @@ public class AddUserActivity extends Activity {
                     URLEncoder.encode("contact","UTF-8")+"="+URLEncoder.encode(contact,"UTF-8")+"&"+
                     URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"+
                     URLEncoder.encode("role","UTF-8")+"="+URLEncoder.encode(role,"UTF-8")+"&"+
+                    URLEncoder.encode("spID","UTF-8")+"="+URLEncoder.encode(serviceID,"UTF-8")+"&"+
                     URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(password,"UTF-8");
             bufferedWriter.write(data_string);
             bufferedWriter.flush();

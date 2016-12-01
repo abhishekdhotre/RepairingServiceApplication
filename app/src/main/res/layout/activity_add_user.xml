@@ -243,6 +243,19 @@
         android:id="@+id/roleSpinner"
         android:spinnerMode="dropdown"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="SERVICE TYPE"
+        android:id="@+id/textView14" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spSpinner"
+        android:spinnerMode="dropdown"/>
+
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
