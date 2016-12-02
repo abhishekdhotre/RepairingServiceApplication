@@ -77,7 +77,7 @@ public class SelectServiceProviderActivity extends AppCompatActivity {
     private  void getData(){
 
         try {
-            address = "http://kedarnadkarny.com/utarepair/list_service_providers.php";
+            address = "link";
             URL url = new URL(address);
             HttpURLConnection con=(HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
