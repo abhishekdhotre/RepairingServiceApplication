@@ -168,7 +168,7 @@ public class AddUserActivity extends Activity {
 
     public void registerUser() {
         try {
-            String address = "http://kedarnadkarny.com/utarepair/register_user.php";
+            String address = "link";
             URL url = new URL(address);
             HttpURLConnection con=(HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
