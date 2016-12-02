@@ -64,7 +64,7 @@ public class ProvideRatingActivity extends AppCompatActivity {
         Toast.makeText(getBaseContext(), "Stars: "+rating, Toast.LENGTH_LONG).show();
 
         try {
-            URL url = new URL("http://kedarnadkarny.com/utarepair/provide_rating.php");
+            URL url = new URL("link");
             HttpURLConnection con=(HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setDoOutput(true);
