@@ -30,7 +30,7 @@ import edu.uta.utarepairingservices.ViewAppointmentStatusActivity;
 
 public class AcceptRejectActivity extends Activity {
 
-    String address="http://kedarnadkarny.com/utarepair/accept_appointment.php";
+    String address="link";
     BufferedReader reader = null;
     String[] accept;
     String customerID=null;
