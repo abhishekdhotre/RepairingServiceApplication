@@ -78,7 +78,7 @@ public class DeleteUserActivity extends AppCompatActivity {
 
     public void viewCustomers() {
         userType = "1";
-        address = "http://kedarnadkarny.com/utarepair/listAll_customers.php";
+        address = "link";
         getData();
         adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1,data);
         lv.setAdapter(adapter);
@@ -86,7 +86,7 @@ public class DeleteUserActivity extends AppCompatActivity {
 
     public void viewSPs() {
         userType = "2";
-        address = "http://kedarnadkarny.com/utarepair/listAll_service_providers.php";
+        address = "link";
         getData();
         adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1,data);
         lv.setAdapter(adapter);
@@ -158,7 +158,7 @@ public class DeleteUserActivity extends AppCompatActivity {
 
     public void deleteUser() {
         try {
-            String address = "http://kedarnadkarny.com/utarepair/delete_user.php";
+            String address = "link";
             URL url = new URL(address);
             HttpURLConnection con=(HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
