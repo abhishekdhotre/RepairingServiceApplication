@@ -150,7 +150,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String datetime = df.format(c.getTime());
 
-            String address = "http://kedarnadkarny.com/utarepair/book_appointment.php";
+            String address = "link";
             URL url = new URL(address);
             HttpURLConnection con=(HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
