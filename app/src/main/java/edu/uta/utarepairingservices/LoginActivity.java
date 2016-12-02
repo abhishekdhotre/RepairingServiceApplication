@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void checkLogin() {
         try {
-            String address = "http://kedarnadkarny.com/utarepair/login_user.php";
+            String address = "link";
             URL url = new URL(address);
             HttpURLConnection con=(HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
