@@ -29,7 +29,7 @@ public class ServiceCategoryActivity extends AppCompatActivity {
 
     ListView lv;
     ArrayAdapter<String> adapter;
-    String address="http://kedarnadkarny.com/utarepair/list_service_category.php";
+    String address="link";
     InputStream is=null;
     String line=null;
     String result=null;
