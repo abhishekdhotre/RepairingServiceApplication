@@ -53,10 +53,10 @@ public class ViewAppointmentStatusActivity extends Activity {
 
         s = getIntent().getStringExtra("view");
         if(s.equals("view_sp")) {
-            address="http://kedarnadkarny.com/utarepair/appointment_status_spv.php";
+            address="link";
         }
         else if(s.equals("view_cu")) {
-            address="http://kedarnadkarny.com/utarepair/appointment_status_cv.php";
+            address="link";
         }
         else {
             Toast.makeText(getBaseContext(), "SOME ERROR", Toast.LENGTH_LONG).show();
