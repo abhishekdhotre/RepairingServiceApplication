@@ -132,7 +132,7 @@ public class ViewAppointment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    String address = "http://kedarnadkarny.com/utarepair/accept_appointment.php";
+                    String address = "link";
                     URL url = new URL(address);
                     HttpURLConnection con=(HttpURLConnection) url.openConnection();
                     con.setRequestMethod("POST");
@@ -171,7 +171,7 @@ public class ViewAppointment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    String address = "http://kedarnadkarny.com/utarepair/reject_appointment.php";
+                    String address = "link";
                     URL url = new URL(address);
                     HttpURLConnection con=(HttpURLConnection) url.openConnection();
                     con.setRequestMethod("POST");
@@ -209,7 +209,7 @@ public class ViewAppointment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    String address = "http://kedarnadkarny.com/utarepair/complete_appointment.php";
+                    String address = "link";
                     URL url = new URL(address);
                     HttpURLConnection con=(HttpURLConnection) url.openConnection();
                     con.setRequestMethod("POST");
@@ -248,7 +248,7 @@ public class ViewAppointment extends AppCompatActivity {
 
     public void cancelAppointment() {
         try {
-            URL url = new URL("http://kedarnadkarny.com/utarepair/cancel_appointment.php");
+            URL url = new URL("link");
             HttpURLConnection con=(HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setDoOutput(true);
@@ -283,7 +283,7 @@ public class ViewAppointment extends AppCompatActivity {
 
     public void getData() {
         try {
-            URL url = new URL("http://kedarnadkarny.com/utarepair/single_appointment.php");
+            URL url = new URL("link");
             HttpURLConnection con=(HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setDoOutput(true);
@@ -311,7 +311,7 @@ public class ViewAppointment extends AppCompatActivity {
             result=sb.toString();
 
             try {
-                url = new URL("http://kedarnadkarny.com/utarepair/view_appointment_image.php?request_id="+requestID);
+                url = new URL("link?request_id="+requestID);
                 InputStream in = url.openStream();
                 Bitmap bitmap = BitmapFactory.decodeStream(in);
                 ImageView img = (ImageView) findViewById(R.id.imageView2);
