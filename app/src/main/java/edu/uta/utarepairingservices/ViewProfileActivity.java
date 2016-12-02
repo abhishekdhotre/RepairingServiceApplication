@@ -82,7 +82,7 @@ public class ViewProfileActivity extends Activity {
         s = getIntent().getStringExtra("view");
         if(s.equals("view_sp")) {
             //tvViewProfileText.setText("Service Provider Profile");
-            address = "http://kedarnadkarny.com/utarepair/view_service_provider_profile.php";
+            address = "link";
             netId = ui.getUta_net_id();
             RoleId = Integer.parseInt(UserInfo.getRoleId());
             btnBook.setVisibility(View.GONE);
@@ -91,11 +91,11 @@ public class ViewProfileActivity extends Activity {
             //tvViewProfileText.setText("Service Provider Profile");
             netId = String.valueOf(ui.getSpID());
             RoleId = 2;
-            address = "http://kedarnadkarny.com/utarepair/view_service_provider_profile2.php";
+            address = "link";
             btnBook.setVisibility(View.VISIBLE);
         }
         else if(s.equals("view_cu")) {
-            address = "http://kedarnadkarny.com/utarepair/view_customer_profile.php";
+            address = "link";
             btnBook.setVisibility(View.GONE);
             RoleId = Integer.parseInt(UserInfo.getRoleId());
             netId = UserInfo.getUta_net_id();
@@ -117,20 +117,6 @@ public class ViewProfileActivity extends Activity {
 
     private  void getData(){
         try {
-            /*if(RoleId==1) {
-                address ="http://kedarnadkarny.com/utarepair/view_customer_profile.php";
-            }
-            else if(RoleId==2) {
-                address ="http://kedarnadkarny.com/utarepair/view_service_provider_profile.php";
-            }
-            else if(RoleId==3){
-                address ="http://kedarnadkarny.com/utarepair/view_admin_profile.php";
-            }
-
-            address = address.concat("?UserId=").concat(netId);
-            URL url = new URL(address);
-            HttpURLConnection con=(HttpURLConnection) url.openConnection();*/
-
             URL url = new URL(address);
             HttpURLConnection con=(HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
@@ -211,7 +197,7 @@ public class ViewProfileActivity extends Activity {
                 textViewToChange.setText(jo.getString("email"));
 
                 try {
-                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+netId+"&RoleId="+RoleId);
+                    URL url = new URL("link?UserId="+netId+"&RoleId="+RoleId);
                     InputStream in = url.openStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(in);
                     ImageView img = (ImageView) findViewById(R.id.imgProfile);
@@ -255,15 +241,11 @@ public class ViewProfileActivity extends Activity {
                 textViewToChange = (TextView) findViewById(R.id.tvEmailValue);
                 textViewToChange.setText(jo.getString("email"));
 
-                /*RatingBar rb = (RatingBar) findViewById(R.id.ratingBar);
-                rb.setRating(Float.parseFloat(jo.getString("rating")));
-                rb.setEnabled(false);*/
-
                 tvRating = (TextView) findViewById(R.id.tvRating);
                 tvRating.setText(jo.getString("rating"));
 
                 try {
-                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+netId+"&RoleId="+RoleId);
+                    URL url = new URL("link?UserId="+netId+"&RoleId="+RoleId);
                     InputStream in = url.openStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(in);
                     ImageView img = (ImageView) findViewById(R.id.imgProfile);
@@ -290,7 +272,7 @@ public class ViewProfileActivity extends Activity {
                 textViewToChange.setText(jo.getString("email"));
 
                 try {
-                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+netId+"&RoleId="+RoleId);
+                    URL url = new URL("link?UserId="+netId+"&RoleId="+RoleId);
                     InputStream in = url.openStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(in);
                     ImageView img = (ImageView) findViewById(R.id.imgProfile);
@@ -324,7 +306,7 @@ public class ViewProfileActivity extends Activity {
             }
             else{
                 try {
-                    URL url = new URL("http://kedarnadkarny.com/utarepair/Fetch_Image.php?UserId="+spID+"&RoleId="+0);
+                    URL url = new URL("link?UserId="+spID+"&RoleId="+0);
                     InputStream in = url.openStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(in);
                     ImageView img = (ImageView) findViewById(R.id.imgProfile);
@@ -339,80 +321,4 @@ public class ViewProfileActivity extends Activity {
             e.printStackTrace();
         }
     }
-
-   /* private  void getData(){
-
-        try {
-            URL url = new URL(address);
-            HttpURLConnection con=(HttpURLConnection) url.openConnection();
-            con.setRequestMethod("POST");
-            con.setDoOutput(true);
-            OutputStream outputStream = con.getOutputStream();
-            BufferedWriter bufferedWriter = new BufferedWriter((new OutputStreamWriter(outputStream,"UTF-8")));
-            String data_string = "";
-            if(s.equals("view_cu")) {
-                data_string = URLEncoder.encode("UserId", "UTF-8") + "=" + URLEncoder.encode(netId, "UTF-8");
-            }
-            else if(s.equals("view_sp")) {
-                data_string = URLEncoder.encode("UserId", "UTF-8") + "=" + URLEncoder.encode(netId, "UTF-8");
-            }
-            else if(s.equals("view_sp2")) {
-                data_string = URLEncoder.encode("SpId", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(ui.getSpID()), "UTF-8");
-            }
-
-            bufferedWriter.write(data_string);
-            bufferedWriter.flush();
-            bufferedWriter.close();
-            outputStream.close();
-
-            is=new BufferedInputStream(con.getInputStream());
-            BufferedReader br=new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb=new StringBuilder();
-
-            while((line=br.readLine())!=null){
-                sb.append(line);
-
-            }
-            is.close();
-            result=sb.toString();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-
-        }
-
-        //parse json data
-        try{
-            JSONArray ja=new JSONArray(result);
-            JSONObject jo;
-            data=new String();
-
-            jo=ja.getJSONObject(0);
-
-            name = jo.getString("firstname") + " " + jo.getString("lastname");
-            gender = jo.getString("gender");
-            email = jo.getString("email");
-            street = jo.getString("street");
-            city = jo.getString("city");
-            contact = Integer.parseInt(jo.getString("contact"));
-            houseNo = Integer.parseInt(jo.getString("house_no"));
-            postal = Integer.parseInt(jo.getString("postal_code"));
-            rating = Float.parseFloat(jo.getString("rating"));
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private void setProfileData() {
-        tvNameValue.setText(name);
-        tvGenderValue.setText(gender);
-        tvContactValue.setText(""+contact);
-        tvEmailValue.setText(email);
-        tvHouseNoValue.setText(""+houseNo);
-        tvStreetValue.setText(street);
-        tvPostalCodeValue.setText(""+postal);
-        tvCityValue.setText(city);
-        tvRating.setText(""+rating);
-    }*/
 }
